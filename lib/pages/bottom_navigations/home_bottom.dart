@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:it_project/custom/custom.dart';
 
 class HomeBottom extends StatelessWidget {
   @override
@@ -11,33 +12,18 @@ class HomeBottom extends StatelessWidget {
           .orderBy('date', descending: true)
           .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (snapshot.hasError) return new Text('Error: ${snapshot.error}');
+        if (snapshot.hasError) return Text('Error: ${snapshot.error}');
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
-            return new Text('Loading...');
+            return Center(child: Text('Loading...'));
           default:
-            return new ListView(
+            return ListView(
               children:
                   snapshot.data.documents.map((DocumentSnapshot document) {
-                return Card(
-                  child: Column(
-                    children: <Widget>[
-                      ListTile(
-                        title: Text(document['message']),
-                        subtitle: Text(document['date'].toDate().toString()),
-                      ),
-                      document['image'] != null
-                          ? Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: MediaQuery.of(context).size.width,
-                              child: Image.network(
-                                document['image'],
-                                fit: BoxFit.fitWidth,
-                              ),
-                            )
-                          : Text('no image')
-                    ],
-                  ),
+                return Post(
+                  image: document['image'],
+                  title: document['message'],
+                  time: document['date'],
                 );
               }).toList(),
             );
