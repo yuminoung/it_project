@@ -2,16 +2,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class Post extends StatelessWidget {
-  String image;
-  String title;
-  Timestamp time;
+  final String image;
+  final String title;
+  final Timestamp time;
   Post({this.image, this.title, this.time});
 
   String humanReadableTime(Timestamp time) {
-    int day = time.toDate().day;
-    int hour = time.toDate().hour;
-    int min = time.toDate().minute;
-    int second = time.toDate().second;
+    // int day = time.toDate().day;
+    // int hour = time.toDate().hour;
+    // int min = time.toDate().minute;
+    // int second = time.toDate().second;
 
     return time.toDate().toString();
   }

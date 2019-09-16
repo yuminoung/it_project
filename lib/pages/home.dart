@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:it_project/routes.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -16,22 +17,28 @@ class _HomeState extends State<Home> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    FirebaseAuth.instance.currentUser().then((user) {
+      if (user == null) {
+        Navigator.pushReplacementNamed(context, '/register');
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Hello'),
       ),
       body: bottomNavRoutes[_currentIndex],
-
       floatingActionButton: FloatingActionButton(
-        // mini: true,
         onPressed: () {
           Navigator.pushNamed(context, '/upload');
         },
         child: Icon(Icons.add),
       ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: _currentIndex,

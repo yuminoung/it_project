@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:it_project/custom/custom.dart';
 
-class HomeBottom extends StatelessWidget {
+class HomeBottom extends StatefulWidget {
+  @override
+  _HomeBottomState createState() => _HomeBottomState();
+}
+
+class _HomeBottomState extends State<HomeBottom> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
