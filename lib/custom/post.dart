@@ -5,6 +5,7 @@ class Post extends StatelessWidget {
   final String image;
   final String title;
   final Timestamp time;
+  DocumentReference doc;
   Post({this.image, this.title, this.time});
 
   String humanReadableTime(Timestamp time) {
@@ -14,6 +15,14 @@ class Post extends StatelessWidget {
     // int second = time.toDate().second;
 
     return time.toDate().toString();
+  }
+  
+  void postCommand (var value){
+    if(value == 1) {
+      doc.delete();
+    }
+    else {
+    }
   }
 
   @override
@@ -57,9 +66,11 @@ class Post extends StatelessWidget {
                           itemBuilder: (context) => [
                             PopupMenuItem(
                               child: Text('edit'),
+                              value: 0
                             ),
                             PopupMenuItem(
                               child: Text('delete'),
+                              value: 1
                             )
                           ],
                         )),
