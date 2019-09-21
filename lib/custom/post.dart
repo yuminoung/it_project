@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 class Post extends StatelessWidget {
@@ -20,6 +21,7 @@ class Post extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    StorageReference ref = FirebaseStorage.instance.ref().child('images/'+ docID);
     if (image != null) {
       return Card(
         margin: EdgeInsets.all(8.0),
@@ -63,7 +65,8 @@ class Post extends StatelessWidget {
                             PopupMenuItem(
                               child: GestureDetector( 
                                 onTap: (){
-                                  var ref = Firestore.instance.document('message/' + docID).delete();
+                                  Firestore.instance.document('message/' + docID).delete();
+                                  ref.delete();
                                 },
                                 child: Text('delete'),
                                 ),
