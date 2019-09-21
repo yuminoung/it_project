@@ -29,6 +29,7 @@ class _HomeBottomState extends State<HomeBottom> {
                   image: document['image'],
                   title: document['message'],
                   time: document['date'],
+                  docID: document.documentID,
                 );
               }).toList(),
             );
