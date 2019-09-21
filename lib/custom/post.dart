@@ -5,8 +5,8 @@ class Post extends StatelessWidget {
   final String image;
   final String title;
   final Timestamp time;
-  DocumentReference doc;
-  Post({this.image, this.title, this.time});
+  final String docID;
+  Post({this.image, this.title, this.time,this.docID});
 
   String humanReadableTime(Timestamp time) {
     // int day = time.toDate().day;
@@ -17,13 +17,6 @@ class Post extends StatelessWidget {
     return time.toDate().toString();
   }
   
-  void postCommand (var value){
-    if(value == 1) {
-      doc.delete();
-    }
-    else {
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,11 +59,14 @@ class Post extends StatelessWidget {
                           itemBuilder: (context) => [
                             PopupMenuItem(
                               child: Text('edit'),
-                              value: 0
                             ),
                             PopupMenuItem(
-                              child: Text('delete'),
-                              value: 1
+                              child: GestureDetector( 
+                                onTap: (){
+                                  var ref = Firestore.instance.document('message/' + docID).delete();
+                                },
+                                child: Text('delete'),
+                                ),
                             )
                           ],
                         )),
