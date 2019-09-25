@@ -1,21 +1,21 @@
 import 'pages/home.dart';
 import 'pages/upload.dart';
 
-import 'pages/bottom_navigations/chat.dart';
-import 'pages/bottom_navigations/artifact.dart';
-import 'pages/bottom_navigations/me.dart';
-import 'pages/bottom_navigations/home_bottom.dart';
 import 'pages/auth/register.dart';
+import 'pages/auth/login.dart';
+
+import 'pages/all_pages.dart';
 
 final namedRoutes = {
   '/': (context) => Home(),
   '/upload': (context) => Upload(),
   '/register': (context) => Register(),
+  '/login': (context) => Login(),
 };
 
-final bottomNavRoutes = [
-  HomeBottom(),
-  Chat(),
-  Artifact(),
-  Me(),
-];
+final routes = {
+  '/': Home(),
+  '/upload': Upload(),
+  '/bottom/home': BottomHome(),
+  '/bottom/me': BottomMe(),
+};

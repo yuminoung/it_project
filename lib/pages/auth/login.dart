@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Register extends StatefulWidget {
+class Login extends StatefulWidget {
   @override
-  _RegisterState createState() => _RegisterState();
+  _LoginState createState() => _LoginState();
 }
 
-class _RegisterState extends State<Register> {
-  TextEditingController _password = TextEditingController();
+class _LoginState extends State<Login> {
   TextEditingController _email = TextEditingController();
+  TextEditingController _password = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: Container(),
-        title: Text('Register'),
+        title: Text('Login'),
       ),
       body: Container(
         padding: EdgeInsets.all(8.0),
@@ -25,12 +24,19 @@ class _RegisterState extends State<Register> {
             children: <Widget>[
               _emailField(),
               _passwordField(),
-              _confirmPasswordField(),
-              _registerButton(),
+              _loginButton(),
               FlatButton(
-                child: Text('Already have an account?'),
+                child: Text('Don\'t have an account?'),
                 onPressed: () {
-                  Navigator.pushReplacementNamed(context, '/login');
+                  Navigator.pushReplacementNamed(context, '/register');
+                },
+              ),
+              FlatButton(
+                child: Text('Forgot password?'),
+                focusColor: Colors.redAccent,
+                hoverColor: Colors.redAccent,
+                onPressed: () {
+                  Navigator.pushReplacementNamed(context, '/register');
                 },
               )
             ],
@@ -79,57 +85,28 @@ class _RegisterState extends State<Register> {
     );
   }
 
-  Widget _confirmPasswordField() {
-    return Padding(
-      padding: EdgeInsets.all(8.0),
-      child: TextField(
-        controller: _password,
-        obscureText: true,
-        maxLines: 1,
-        // keyboardType: TextInputType.visiblePassword,
-        autofocus: false,
-        decoration: new InputDecoration(
-            hintText: 'Confirm Password',
-            icon: new Icon(
-              Icons.lock,
-              color: Colors.grey,
-            ),
-            border: InputBorder.none),
-      ),
-    );
-  }
-
-  Widget _registerButton() {
+  Widget _loginButton() {
     return Padding(
       child: RaisedButton(
         padding: EdgeInsets.all(16.0),
-        child: Text('Register'),
+        child: Text('Login'),
         onPressed: () {
-          registerUser();
           FocusScope.of(context).unfocus();
-          print(_password.text);
-          print(_email.text);
+          loginUser();
         },
       ),
       padding: EdgeInsets.all(8.0),
     );
   }
 
-  void registerUser() async {
+  Future<void> loginUser() async {
     if (_password != null && _email != null) {
       final auth = FirebaseAuth.instance;
-
       auth
-          .createUserWithEmailAndPassword(
+          .signInWithEmailAndPassword(
               email: _email.text, password: _password.text)
-          .then((result) async {
-        final firestoreRef =
-            Firestore.instance.collection('users').document(result.user.uid);
-        await firestoreRef.setData(
-          {
-            // 'id': result.user.uid,
-          },
-        );
+          .then((result) {
+        print(result.user.uid);
         Navigator.pushReplacementNamed(context, '/');
       }).catchError((error) {
         print(error);

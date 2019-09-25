@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:it_project/routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:it_project/widgets/custom_bottom_navigation_bar.dart';
+
+import '../widgets/all_widgets.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -8,13 +11,16 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  int _currentIndex = 0;
+  int _index = 0;
 
-  void onTabTapped(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
-  }
+  List<Widget> _tabs = [
+    routes['/bottom/home'],
+    Container(color: Colors.red),
+    Container(color: Colors.green),
+    routes['/bottom/me']
+  ];
+
+  List<String> _tabTitles = ['Family', 'Space', 'Artifact', 'Me'];
 
   @override
   void initState() {
@@ -29,38 +35,37 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Hello'),
+      appBar: CustomAppBar(
+        title: _tabTitles[_index],
+        trailing: _index == 0
+            ? CustomIconButton(
+                icon: Icon(Icons.camera_alt),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    CustomSlideFromBottomPageRouteBuilder(
+                      widget: routes['/upload'],
+                    ),
+                  );
+                },
+              )
+            : Container(),
       ),
-      body: bottomNavRoutes[_currentIndex],
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushNamed(context, '/upload');
+      body: _tabs[_index],
+      bottomNavigationBar: CustomBottomNavigationBar(
+        selectedIndex: (index) {
+          setState(() {
+            _index = index;
+          });
         },
-        child: Icon(Icons.add),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: _currentIndex,
-        onTap: onTabTapped,
         items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            title: Text('Home'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.group),
-            title: Text('Chat'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            title: Text('Artifacts'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.face),
-            title: Text('Me'),
-          ),
+          CustomBottomAppBarItem(iconImagePath: 'assets/icons/home.png'),
+          CustomBottomAppBarItem(iconImagePath: 'assets/icons/family.png'),
+          CustomBottomAppBarItem(iconImagePath: 'assets/icons/photo.png'),
+          CustomBottomAppBarItem(iconImagePath: 'assets/icons/face.png'),
         ],
+        height: 60,
+        selectedColor: Colors.red,
       ),
     );
   }
