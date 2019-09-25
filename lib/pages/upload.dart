@@ -12,15 +12,16 @@ class Upload extends StatefulWidget {
 
 class _UploadState extends State<Upload> {
   TextEditingController _textFieldController = TextEditingController();
+  bool isLoading = false;
   File _image;
 
   //get the image from gallery
   Future getImageFromPhoto() async {
-    Navigator.pop(context);
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
     setState(() {
       _image = image;
     });
+    Navigator.pop(context);
   }
 
   Future getImageFromCamera() async {
@@ -40,97 +41,109 @@ class _UploadState extends State<Upload> {
           IconButton(
             icon: Icon(Icons.done),
             onPressed: () async {
-              final ref = Firestore.instance.collection('message').document();
+              FocusScope.of(context).unfocus();
+              setState(() {
+                isLoading = true;
+              });
+              final ref = Firestore.instance.collection('artifacts').document();
+              ref.setData({
+                'message': _textFieldController.text,
+                'user': 'Yumin',
+                'created_at': DateTime.now(),
+              });
               if (_image != null) {
-                ref.setData({
-                  'message': _textFieldController.text,
-                  'user': 'Yumin',
-                  'date': DateTime.now(),
-                });
                 StorageReference storageRef = FirebaseStorage.instance
                     .ref()
                     .child('images/' + ref.documentID.toString());
                 StorageUploadTask uploadTask = storageRef.putFile(_image);
                 StorageTaskSnapshot downloadUrl = await uploadTask.onComplete;
                 String url = await downloadUrl.ref.getDownloadURL();
-
                 ref.setData({
                   'image': url,
                 }, merge: true);
-              } else {
-                ref.setData({
-                  'message': _textFieldController.text,
-                  'user': 'Yumin',
-                  'date': DateTime.now(),
-                });
               }
-
-              FocusScope.of(context).unfocus();
               Navigator.pop(context);
             },
           ),
         ],
       ),
-      body: Container(
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              child: SizedBox(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextField(
-                    expands: true,
-                    cursorColor: Colors.redAccent,
-                    controller: _textFieldController,
-                    maxLines: null,
-                    decoration: InputDecoration(border: InputBorder.none),
-                  ),
+      body: IgnorePointer(
+        ignoring: isLoading,
+        child: Stack(
+          children: [
+            SafeArea(
+              child: Container(
+                child: Column(
+                  children: <Widget>[
+                    Expanded(
+                      child: SizedBox(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextField(
+                            expands: true,
+                            cursorColor: Colors.redAccent,
+                            controller: _textFieldController,
+                            maxLines: null,
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.all(10),
+                          child: SizedBox(
+                            height: MediaQuery.of(context).size.width / 4,
+                            width: MediaQuery.of(context).size.width / 4,
+                            child: _image == null
+                                ? FlatButton(
+                                    textColor: Colors.grey,
+                                    shape: Border.all(color: Colors.grey),
+                                    child: Icon(Icons.add),
+                                    onPressed: () {
+                                      showModalBottomSheet(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return Container(
+                                                child: Wrap(
+                                              children: <Widget>[
+                                                ListTile(
+                                                  leading: Icon(Icons.photo),
+                                                  title: Text(
+                                                      'Choose photo from gallery'),
+                                                  onTap: getImageFromPhoto,
+                                                ),
+                                                ListTile(
+                                                  leading:
+                                                      Icon(Icons.camera_alt),
+                                                  title: Text(
+                                                      'Take photo with camera'),
+                                                  onTap: getImageFromCamera,
+                                                )
+                                              ],
+                                            ));
+                                          });
+                                    },
+                                  )
+                                : Image.file(
+                                    _image,
+                                    fit: BoxFit.cover,
+                                  ),
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
                 ),
               ),
             ),
-            Row(
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsets.all(10),
-                  child: SizedBox(
-                    height: MediaQuery.of(context).size.width / 4,
-                    width: MediaQuery.of(context).size.width / 4,
-                    child: _image == null
-                        ? FlatButton(
-                            textColor: Colors.grey,
-                            shape: Border.all(color: Colors.grey),
-                            child: Icon(Icons.add),
-                            onPressed: () {
-                              showModalBottomSheet(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return Container(
-                                        child: Wrap(
-                                      children: <Widget>[
-                                        ListTile(
-                                          leading: Icon(Icons.photo),
-                                          title:
-                                              Text('Choose photo from gallery'),
-                                          onTap: getImageFromPhoto,
-                                        ),
-                                        ListTile(
-                                          leading: Icon(Icons.camera_alt),
-                                          title: Text('Take photo with camera'),
-                                          onTap: getImageFromCamera,
-                                        )
-                                      ],
-                                    ));
-                                  });
-                            },
-                          )
-                        : Image.file(
-                            _image,
-                            fit: BoxFit.cover,
-                          ),
-                  ),
-                ),
-              ],
-            )
+            isLoading
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : Container()
           ],
         ),
       ),
