@@ -33,6 +33,7 @@ class _BottomHomeState extends State<BottomHome> {
                     time: document['created_at'],
                     message: document['message'],
                     image: document['image'],
+                    docID: document.documentID,
                   );
                 }).toList(),
               );

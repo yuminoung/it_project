@@ -27,7 +27,7 @@ class _HomeState extends State<Home> {
     super.initState();
     FirebaseAuth.instance.currentUser().then((user) {
       if (user == null) {
-        Navigator.pushReplacementNamed(context, '/register');
+        Navigator.pushReplacementNamed(context, '/login');
       }
     });
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 import 'package:it_project/widgets/all_widgets.dart';
 
@@ -7,7 +8,8 @@ class CustomPost extends StatelessWidget {
   final String image;
   final String message;
   final Timestamp time;
-  CustomPost({this.image, this.message, this.time});
+  final String docID;
+  CustomPost({this.image, this.message, this.time, this.docID});
 
   Widget _buildImage(BuildContext context) {
     return ClipRRect(
@@ -56,12 +58,18 @@ class CustomPost extends StatelessWidget {
                 child: Icon(Icons.more_horiz),
                 itemBuilder: (context) => [
                   PopupMenuItem(
-                    child: Text('edit'),
+                    child: GestureDetector(child: Text('edit'),onTap: (){
+                      Navigator.pushNamed(context, '/edit');
+                    },),
                   ),
                   PopupMenuItem(
                     child: GestureDetector(
                       onTap: () {
-                        // Navigator.pop(context);
+                        print(docID);
+                        Firestore.instance.document('artifacts/' + docID).delete();
+                        StorageReference ref = FirebaseStorage.instance.ref().child('images/'+ docID);
+                        ref.delete();
+                        Navigator.pop(context);
                       },
                       child: Text('delete'),
                     ),

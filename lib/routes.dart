@@ -1,9 +1,3 @@
-import 'pages/home.dart';
-import 'pages/upload.dart';
-
-import 'pages/auth/register.dart';
-import 'pages/auth/login.dart';
-
 import 'pages/all_pages.dart';
 
 final namedRoutes = {
@@ -11,6 +5,7 @@ final namedRoutes = {
   '/upload': (context) => Upload(),
   '/register': (context) => Register(),
   '/login': (context) => Login(),
+  '/edit': (context) => EditPost(),
 };
 
 final routes = {
