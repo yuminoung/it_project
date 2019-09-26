@@ -1,3 +1,5 @@
+import 'package:it_project/pages/landing.dart';
+
 import 'pages/home.dart';
 import 'pages/upload.dart';
 
@@ -11,6 +13,7 @@ final namedRoutes = {
   '/upload': (context) => Upload(),
   '/register': (context) => Register(),
   '/login': (context) => Login(),
+  '/landing': (context) => LandingPage(),
 };
 
 final routes = {

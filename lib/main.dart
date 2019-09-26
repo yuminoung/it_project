@@ -17,7 +17,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       theme: themeData,
       debugShowCheckedModeBanner: false,
-      initialRoute: '/',
+      initialRoute: '/landing',
       routes: namedRoutes,
     );
   }

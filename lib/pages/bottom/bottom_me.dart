@@ -8,6 +8,24 @@ class BottomMe extends StatefulWidget {
 
 class _BottomMeState extends State<BottomMe> {
   FirebaseAuth _auth = FirebaseAuth.instance;
+  FirebaseUser _user;
+  String data;
+
+  @override
+  void initState() {
+    super.initState();
+    _auth.currentUser().then((user) {
+      if (user != null) {
+        setState(() {
+          _user = user;
+        });
+        if(_user.displayName != null){
+          data = _user.displayName;
+        }
+        else data = "the user does not have a name!";
+      }
+    });
+  }
 
   Future<FirebaseUser> getUserID() async {
     FirebaseUser user = await _auth.currentUser();
@@ -41,8 +59,8 @@ class _BottomMeState extends State<BottomMe> {
                       Padding(
                         padding: EdgeInsets.all(32.0),
                         child: Text(
+                          data,
                           // snapshot.data.uid,
-                          'Yuminoung',
                           style: TextStyle(fontSize: 18),
                         ),
                       )
