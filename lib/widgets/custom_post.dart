@@ -58,7 +58,9 @@ class CustomPost extends StatelessWidget {
                 child: Icon(Icons.more_horiz),
                 itemBuilder: (context) => [
                   PopupMenuItem(
-                    child: Text('edit'),
+                    child: GestureDetector(child: Text('edit'),onTap: (){
+                      Navigator.pushNamed(context, '/edit');
+                    },),
                   ),
                   PopupMenuItem(
                     child: GestureDetector(

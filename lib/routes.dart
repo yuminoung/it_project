@@ -1,11 +1,3 @@
-import 'package:it_project/pages/landing.dart';
-
-import 'pages/home.dart';
-import 'pages/upload.dart';
-
-import 'pages/auth/register.dart';
-import 'pages/auth/login.dart';
-
 import 'pages/all_pages.dart';
 
 final namedRoutes = {
