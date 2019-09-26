@@ -13,7 +13,7 @@ class EditPostState extends State<EditPost> {
       appBar: CustomAppBar(
         title: 'Edit Post',
       ),
-      body: Text('teat'),
+      body: Text('edit post'),
     );
   }
 }
