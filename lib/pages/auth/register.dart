@@ -10,6 +10,8 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   TextEditingController _password = TextEditingController();
   TextEditingController _email = TextEditingController();
+  TextEditingController _firstname = TextEditingController();
+  TextEditingController _lastname = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +25,8 @@ class _RegisterState extends State<Register> {
         child: Form(
           child: ListView(
             children: <Widget>[
+              _firstnameField(),
+              _lastnameField(),
               _emailField(),
               _passwordField(),
               _confirmPasswordField(),
@@ -39,6 +43,43 @@ class _RegisterState extends State<Register> {
       ),
     );
   }
+
+  Widget _firstnameField() {
+    return Padding(
+      padding: EdgeInsets.all(8.0),
+      child: TextFormField(
+        controller: _firstname,
+        maxLines: 1,
+        autofocus: false,
+        decoration: new InputDecoration(
+            hintText: 'First Name',
+            icon: new Icon(
+              Icons.text_format,
+              color: Colors.grey,
+            ),
+            border: InputBorder.none),
+      ),
+    );
+  }
+
+  Widget _lastnameField() {
+    return Padding(
+      padding: EdgeInsets.all(8.0),
+      child: TextFormField(
+        controller: _lastname,
+        maxLines: 1,
+        autofocus: false,
+        decoration: new InputDecoration(
+            hintText: 'Last Name',
+            icon: new Icon(
+              Icons.text_format,
+              color: Colors.grey,
+            ),
+            border: InputBorder.none),
+      ),
+    );
+  }
+
 
   Widget _emailField() {
     return Padding(
@@ -116,7 +157,8 @@ class _RegisterState extends State<Register> {
   }
 
   void registerUser() async {
-    if (_password != null && _email != null) {
+    if (_password != null && _email != null && 
+    _lastname != null && _firstname != null) {
       final auth = FirebaseAuth.instance;
 
       auth
@@ -127,9 +169,17 @@ class _RegisterState extends State<Register> {
             Firestore.instance.collection('users').document(result.user.uid);
         await firestoreRef.setData(
           {
-            // 'id': result.user.uid,
+            'id': result.user.uid,
+            'first_name': _firstname.text,
+            'last_name': _lastname.text,
+            'family': null,
           },
         );
+        FirebaseUser account = result.user;
+        var userUpdateInfo = new UserUpdateInfo();
+        userUpdateInfo.displayName = _firstname.text + ' ' + _lastname.text;
+        account.updateProfile(userUpdateInfo);
+        account.reload();
         Navigator.pushReplacementNamed(context, '/');
       }).catchError((error) {
         print(error);

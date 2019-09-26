@@ -5,7 +5,7 @@ final namedRoutes = {
   '/upload': (context) => Upload(),
   '/register': (context) => Register(),
   '/login': (context) => Login(),
-  '/edit': (context) => EditPost(),
+  '/landing': (context) => LandingPage(),
 };
 
 final routes = {

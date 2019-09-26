@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:it_project/routes.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:it_project/widgets/custom_bottom_navigation_bar.dart';
 
 import '../widgets/all_widgets.dart';
@@ -22,15 +21,6 @@ class _HomeState extends State<Home> {
 
   List<String> _tabTitles = ['Family', 'Space', 'Artifact', 'Me'];
 
-  @override
-  void initState() {
-    super.initState();
-    FirebaseAuth.instance.currentUser().then((user) {
-      if (user == null) {
-        Navigator.pushReplacementNamed(context, '/login');
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
