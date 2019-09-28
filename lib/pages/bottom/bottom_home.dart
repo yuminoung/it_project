@@ -34,6 +34,7 @@ class _BottomHomeState extends State<BottomHome> {
                     message: document['message'],
                     image: document['image'],
                     docID: document.documentID,
+                    username: document['user'],
                   );
                 }).toList(),
               );
