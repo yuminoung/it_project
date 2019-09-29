@@ -13,9 +13,15 @@ class _BottomFamState extends State<BottomFam>{
   void initState() {
     FirebaseAuth.instance.currentUser().then((user){
       if(user == null) {
-        familyData = "You are not logged in!";
+        setState(() {
+          familyData = "You are not logged in!";
+        });
       }
-      else familyData = "Hello " + user.displayName + ", your family list is empty.";
+      else {
+        setState(() {
+          familyData = "Hello " + user.displayName + ", your family list is empty.";
+        });
+        }
     }).catchError((e) => print(e));
     super.initState();
   }
