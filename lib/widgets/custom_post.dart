@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+
 
 import 'package:it_project/widgets/all_widgets.dart';
 
@@ -18,11 +20,20 @@ class CustomPost extends StatelessWidget {
         bottomLeft: Radius.circular(4),
         bottomRight: Radius.circular(4),
       ),
-      child: Image.network(
-        image,
+      child: CachedNetworkImage(
         width: MediaQuery.of(context).size.width,
-        // height: MediaQuery.of(context).size.width,
-        fit: BoxFit.fitWidth,
+        height: MediaQuery.of(context).size.width,
+        fit: BoxFit.cover,
+        imageUrl: image,
+        placeholder: (context, url) {
+          return Container(
+              padding: EdgeInsets.all(16),
+              child: CircularProgressIndicator(
+                backgroundColor: Colors.red,
+              ),
+              width: 50,
+              height: 50);
+        },
       ),
     );
   }
