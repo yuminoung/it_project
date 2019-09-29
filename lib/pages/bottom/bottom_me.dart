@@ -101,15 +101,6 @@ class _BottomMeState extends State<BottomMe> {
           Divider(
             height: 0,
           ),
-          // RaisedButton(
-          //   padding: EdgeInsets.all(16.0),
-          //   child: Text('Sign Out'),
-          //   onPressed: () {
-          //     _auth.signOut().then((result) {
-          //       Navigator.pushReplacementNamed(context, '/register');
-          //     });
-          //   },
-          // )
         ],
       ),
     );
