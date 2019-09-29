@@ -16,4 +16,5 @@ final routes = {
   '/bottom/home': BottomHome(),
   '/bottom/me': BottomMe(),
   '/bottom/family':BottomFam(),
+  '/settings': Settings(),
 };

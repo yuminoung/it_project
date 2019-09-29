@@ -9,3 +9,4 @@ export 'auth/register.dart';
 export 'edit_post.dart';
 
 export 'landing.dart';
+export 'settings.dart';
