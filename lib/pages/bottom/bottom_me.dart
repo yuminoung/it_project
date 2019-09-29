@@ -9,7 +9,7 @@ class BottomMe extends StatefulWidget {
 class _BottomMeState extends State<BottomMe> {
   FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseUser _user;
-  String data;
+  String profile;
 
   @override
   void initState() {
@@ -20,9 +20,9 @@ class _BottomMeState extends State<BottomMe> {
           _user = user;
         });
         if(_user.displayName != null){
-          data = _user.displayName;
+          profile = _user.displayName;
         }
-        else data = "the user does not have a name!";
+        else profile = "the user does not have a name!";
       }
     });
   }
@@ -59,7 +59,7 @@ class _BottomMeState extends State<BottomMe> {
                       Padding(
                         padding: EdgeInsets.all(32.0),
                         child: Text(
-                          data,
+                          profile,
                           // snapshot.data.uid,
                           style: TextStyle(fontSize: 18),
                         ),

@@ -9,7 +9,8 @@ class CustomPost extends StatelessWidget {
   final String message;
   final Timestamp time;
   final String docID;
-  CustomPost({this.image, this.message, this.time, this.docID});
+  final String username;
+  CustomPost({this.image, this.message, this.time, this.docID, this.username});
 
   Widget _buildImage(BuildContext context) {
     return ClipRRect(
@@ -44,7 +45,7 @@ class CustomPost extends StatelessWidget {
           Container(
             padding: EdgeInsets.all(8.0),
             child: Text(
-              'Yuminoung',
+              username,
               // style: Theme.of(context).textTheme.title,
             ),
           ),
