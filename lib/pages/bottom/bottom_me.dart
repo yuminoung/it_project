@@ -92,7 +92,7 @@ class _BottomMeState extends State<BottomMe> {
             title: Text('Logout'),
             onTap: () {
               _auth.signOut().then((_) {
-                Navigator.pushReplacementNamed(context, '/login');
+                Navigator.replace(context, newRoute: CustomSlideFromBottomPageRouteBuilder(widget: routes['/login']));
               }).catchError((error) {
                 print("error");
               });
