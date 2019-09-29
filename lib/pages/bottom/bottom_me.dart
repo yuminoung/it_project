@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:it_project/widgets/all_widgets.dart';
+import 'package:it_project/routes.dart';
 class BottomMe extends StatefulWidget {
   @override
   _BottomMeState createState() => _BottomMeState();
@@ -78,7 +79,9 @@ class _BottomMeState extends State<BottomMe> {
             leading: ImageIcon(AssetImage('assets/icons/setting.png')),
             title: Text('Settings'),
             onTap: () {
-              print("settings");
+              print('ok');
+              Navigator.push(context, CustomSlideFromBottomPageRouteBuilder(widget: routes['/settings']));
+              
             },
           ),
           Divider(
