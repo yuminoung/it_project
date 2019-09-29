@@ -25,6 +25,7 @@ class _BottomMeState extends State<BottomMe> {
         }
         else profile = "the user does not have a name!";
       }
+      else profile = "You are not logged in yet!";
     });
   }
 
@@ -36,6 +37,34 @@ class _BottomMeState extends State<BottomMe> {
 
   @override
   Widget build(BuildContext context) {
+    if(_user == null){
+      return Container(
+        padding: EdgeInsets.all(16.0),
+        child: Form(
+          child: ListView(
+            children: <Widget>[
+              Center(child: Text("Logged out"),),
+              Divider(color: Colors.grey, height: 0,),
+              FlatButton(
+                child: Text("Log in"),
+                onPressed: (){
+                  Navigator.pushReplacementNamed(context, '/login');
+                },
+              ),
+              Divider(color: Colors.grey, height: 0,),
+              FlatButton(
+                child: Text("Register"),
+                onPressed: (){
+                  Navigator.pushReplacementNamed(context, '/register');
+                },
+              ),
+              Divider(color: Colors.grey, height: 0,),
+            ],
+          ),
+        )
+      );
+    }
+    
     return Container(
       padding: EdgeInsets.all(8.0),
       child: ListView(
