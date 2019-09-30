@@ -32,12 +32,6 @@ class _SettingsState extends State<Settings> {
               _firstnameField(),
               _lastnameField(),
               _confirmButton(),
-              FlatButton(
-                child: Text('Already have an account?'),
-                onPressed: () {
-                  Navigator.pushReplacementNamed(context, '/login');
-                },
-              )
             ],
           ),
         ),

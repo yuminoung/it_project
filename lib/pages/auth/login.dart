@@ -20,33 +20,31 @@ class _LoginState extends State<Login> {
       ),
       body: Container(
         padding: EdgeInsets.all(8.0),
-        child: Form(
-          child: ListView(
-            children: <Widget>[
-              _emailField(),
-              _passwordField(),
-              _loginButton(),
-              FlatButton(
-                child: Text('Don\'t have an account?'),
-                onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    CustomSlideFromBottomPageRouteBuilder(
-                      widget: routes['/register'],
-                    ),
-                  );
-                },
-              ),
-              // FlatButton(
-              //   child: Text('Forgot password?'),
-              //   focusColor: Colors.redAccent,
-              //   hoverColor: Colors.redAccent,
-              //   onPressed: () {
-              //     Navigator.pushReplacementNamed(context, '/register');
-              //   },
-              // )
-            ],
-          ),
+        child: ListView(
+          children: <Widget>[
+            _emailField(),
+            _passwordField(),
+            _loginButton(),
+            FlatButton(
+              child: Text('Don\'t have an account?'),
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  CustomSlideFromBottomPageRouteBuilder(
+                    widget: routes['/register'],
+                  ),
+                );
+              },
+            ),
+            // FlatButton(
+            //   child: Text('Forgot password?'),
+            //   focusColor: Colors.redAccent,
+            //   hoverColor: Colors.redAccent,
+            //   onPressed: () {
+            //     Navigator.pushReplacementNamed(context, '/register');
+            //   },
+            // )
+          ],
         ),
       ),
     );

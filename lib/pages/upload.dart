@@ -80,6 +80,8 @@ class _UploadState extends State<Upload> {
           },
         ),
       ),
+
+      // ignore pointer is to ignore all touch event when uploading is true
       body: IgnorePointer(
         ignoring: isLoading,
         child: Stack(

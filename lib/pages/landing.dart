@@ -14,7 +14,7 @@ class _LandingPageState extends State<LandingPage> {
   void initState() {
     super.initState();
     FirebaseAuth.instance.currentUser().then((user) async {
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(Duration(seconds: 2));
       if (user == null) {
         Navigator.pushReplacement(
           context,
@@ -33,7 +33,10 @@ class _LandingPageState extends State<LandingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text("TEAM HELLO WORLD"),
+        child: Text(
+          "IT PROJECT\nHELLO WOLRD\n😆 OLIVER\n🤨 HAITIAN\n😋 YUMIN\n😎 ZIRUN",
+          style: TextStyle(fontFamily: 'Inconsolata', fontSize: 34),
+        ),
       ),
     );
   }
