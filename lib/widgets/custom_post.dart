@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
-
 import 'package:it_project/widgets/all_widgets.dart';
 
 class CustomPost extends StatelessWidget {
@@ -67,24 +66,26 @@ class CustomPost extends StatelessWidget {
           Expanded(
             child: Container(
               child: PopupMenuButton(
+                onSelected: (result) {
+                  if (result == 'delete') {
+                    Firestore.instance.document('artifacts/' + docID).delete();
+                    StorageReference ref =
+                        FirebaseStorage.instance.ref().child('images/' + docID);
+                    ref.delete();
+                  }
+                  if (result == 'edit') {
+                    print('edit');
+                  }
+                },
                 child: Icon(Icons.more_horiz),
                 itemBuilder: (context) => [
                   PopupMenuItem(
-                    child: GestureDetector(child: Text('edit'),onTap: (){
-                      Navigator.pushNamed(context, '/edit');
-                    },),
+                    value: 'edit',
+                    child: Text('Edit'),
                   ),
                   PopupMenuItem(
-                    child: GestureDetector(
-                      onTap: () {
-                        print(docID);
-                        Firestore.instance.document('artifacts/' + docID).delete();
-                        StorageReference ref = FirebaseStorage.instance.ref().child('images/'+ docID);
-                        ref.delete();
-                        Navigator.pop(context);
-                      },
-                      child: Text('delete'),
-                    ),
+                    value: 'delete',
+                    child: Text('Delete'),
                   )
                 ],
               ),

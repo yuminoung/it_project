@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import 'package:it_project/widgets/all_widgets.dart';
+import 'package:it_project/routes.dart';
 
 class LandingPage extends StatefulWidget {
   @override
@@ -10,21 +12,29 @@ class LandingPage extends StatefulWidget {
 class _LandingPageState extends State<LandingPage> {
   @override
   void initState() {
-    FirebaseAuth.instance.currentUser().then((user){
-      if(user == null) {
-        Navigator.pushReplacementNamed(context, '/login');
-      }
-      else Navigator.pushReplacementNamed(context, '/');
-    }).catchError((e) => print(e));
     super.initState();
+    FirebaseAuth.instance.currentUser().then((user) async {
+      await Future.delayed(Duration(seconds: 1));
+      if (user == null) {
+        Navigator.pushReplacement(
+          context,
+          CustomSlideFromBottomPageRouteBuilder(widget: routes['/login']),
+        );
+      } else {
+        Navigator.pushReplacement(
+          context,
+          CustomSlideFromBottomPageRouteBuilder(widget: routes['/']),
+        );
+      }
+    }).catchError((e) => print(e));
   }
-  
-  
+
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
-      body:Center(child: Text("Hello World is loading for you..."),),
-      backgroundColor: Colors.green,
+      body: Center(
+        child: Text("TEAM HELLO WORLD"),
+      ),
     );
   }
 }

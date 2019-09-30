@@ -23,7 +23,10 @@ class _BottomHomeState extends State<BottomHome> {
           if (snapshot.hasError) return Text('Error: ${snapshot.error}');
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
-              return LinearProgressIndicator();
+              return LinearProgressIndicator(
+                backgroundColor: Color.fromRGBO(250, 250, 250, 0),
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.redAccent),
+              );
             default:
               return ListView(
                 padding: EdgeInsets.fromLTRB(8, 8, 8, 0),

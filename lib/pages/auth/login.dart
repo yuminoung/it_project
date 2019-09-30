@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:it_project/widgets/all_widgets.dart';
+import 'package:it_project/routes.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -13,9 +15,8 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: Container(),
-        title: Text('Login'),
+      appBar: CustomAppBar(
+        title: 'Login',
       ),
       body: Container(
         padding: EdgeInsets.all(8.0),
@@ -28,17 +29,22 @@ class _LoginState extends State<Login> {
               FlatButton(
                 child: Text('Don\'t have an account?'),
                 onPressed: () {
-                  Navigator.pushReplacementNamed(context, '/register');
+                  Navigator.pushReplacement(
+                    context,
+                    CustomSlideFromBottomPageRouteBuilder(
+                      widget: routes['/register'],
+                    ),
+                  );
                 },
               ),
-              FlatButton(
-                child: Text('Forgot password?'),
-                focusColor: Colors.redAccent,
-                hoverColor: Colors.redAccent,
-                onPressed: () {
-                  Navigator.pushReplacementNamed(context, '/register');
-                },
-              )
+              // FlatButton(
+              //   child: Text('Forgot password?'),
+              //   focusColor: Colors.redAccent,
+              //   hoverColor: Colors.redAccent,
+              //   onPressed: () {
+              //     Navigator.pushReplacementNamed(context, '/register');
+              //   },
+              // )
             ],
           ),
         ),
@@ -107,7 +113,8 @@ class _LoginState extends State<Login> {
               email: _email.text, password: _password.text)
           .then((result) {
         print(result.user.uid);
-        Navigator.pushReplacementNamed(context, '/');
+        Navigator.pushReplacement(context,
+            CustomSlideFromBottomPageRouteBuilder(widget: routes['/']));
       }).catchError((error) {
         print(error);
       });

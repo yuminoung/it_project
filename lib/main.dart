@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'routes.dart';
 import 'theme.dart';
 
@@ -17,8 +18,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       theme: themeData,
       debugShowCheckedModeBanner: false,
-      initialRoute: '/landing',
-      routes: namedRoutes,
+      home: routes['/landing'],
     );
   }
 }
