@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_picker/image_picker.dart';
@@ -46,10 +47,13 @@ class _UploadState extends State<Upload> {
                 isLoading = true;
               });
               final ref = Firestore.instance.collection('artifacts').document();
+              var auth = await FirebaseAuth.instance.currentUser();
+              final userRef = Firestore.instance.collection('users').document(auth.uid);
+              final userData = await userRef.get();
               ref.setData({
                 'message': _textFieldController.text,
-                'user': 'Yumin',
                 'created_at': DateTime.now(),
+                'user': userData.data['first_name'] + " " + userData.data['last_name'],
               });
               if (_image != null) {
                 StorageReference storageRef = FirebaseStorage.instance

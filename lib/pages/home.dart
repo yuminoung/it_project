@@ -14,12 +14,12 @@ class _HomeState extends State<Home> {
 
   List<Widget> _tabs = [
     routes['/bottom/home'],
-    Container(color: Colors.red),
+    routes['/bottom/family'],
     Container(color: Colors.green),
     routes['/bottom/me']
   ];
 
-  List<String> _tabTitles = ['Family', 'Space', 'Artifact', 'Me'];
+  List<String> _tabTitles = ['Artifacts', 'Family', 'Notifications', 'Me'];
 
 
   @override

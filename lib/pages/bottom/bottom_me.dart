@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:it_project/widgets/all_widgets.dart';
+import 'package:it_project/routes.dart';
 class BottomMe extends StatefulWidget {
   @override
   _BottomMeState createState() => _BottomMeState();
@@ -9,7 +10,7 @@ class BottomMe extends StatefulWidget {
 class _BottomMeState extends State<BottomMe> {
   FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseUser _user;
-  String data;
+  String profile;
 
   @override
   void initState() {
@@ -20,10 +21,11 @@ class _BottomMeState extends State<BottomMe> {
           _user = user;
         });
         if(_user.displayName != null){
-          data = _user.displayName;
+          profile = _user.displayName;
         }
-        else data = "the user does not have a name!";
+        else profile = "the user does not have a name!";
       }
+      else profile = "You are not logged in yet!";
     });
   }
 
@@ -35,6 +37,34 @@ class _BottomMeState extends State<BottomMe> {
 
   @override
   Widget build(BuildContext context) {
+    if(_user == null){
+      return Container(
+        padding: EdgeInsets.all(16.0),
+        child: Form(
+          child: ListView(
+            children: <Widget>[
+              Center(child: Text("Logged out"),),
+              Divider(color: Colors.grey, height: 0,),
+              FlatButton(
+                child: Text("Log in"),
+                onPressed: (){
+                  Navigator.pushReplacementNamed(context, '/login');
+                },
+              ),
+              Divider(color: Colors.grey, height: 0,),
+              FlatButton(
+                child: Text("Register"),
+                onPressed: (){
+                  Navigator.pushReplacementNamed(context, '/register');
+                },
+              ),
+              Divider(color: Colors.grey, height: 0,),
+            ],
+          ),
+        )
+      );
+    }
+    
     return Container(
       padding: EdgeInsets.all(8.0),
       child: ListView(
@@ -59,7 +89,7 @@ class _BottomMeState extends State<BottomMe> {
                       Padding(
                         padding: EdgeInsets.all(32.0),
                         child: Text(
-                          data,
+                          profile,
                           // snapshot.data.uid,
                           style: TextStyle(fontSize: 18),
                         ),
@@ -78,7 +108,9 @@ class _BottomMeState extends State<BottomMe> {
             leading: ImageIcon(AssetImage('assets/icons/setting.png')),
             title: Text('Settings'),
             onTap: () {
-              print("settings");
+              print('ok');
+              Navigator.push(context, CustomSlideFromBottomPageRouteBuilder(widget: routes['/settings']));
+              
             },
           ),
           Divider(
@@ -89,7 +121,7 @@ class _BottomMeState extends State<BottomMe> {
             title: Text('Logout'),
             onTap: () {
               _auth.signOut().then((_) {
-                Navigator.pushReplacementNamed(context, '/login');
+                Navigator.pushReplacementNamed(context, '/landing');
               }).catchError((error) {
                 print("error");
               });
@@ -98,15 +130,6 @@ class _BottomMeState extends State<BottomMe> {
           Divider(
             height: 0,
           ),
-          // RaisedButton(
-          //   padding: EdgeInsets.all(16.0),
-          //   child: Text('Sign Out'),
-          //   onPressed: () {
-          //     _auth.signOut().then((result) {
-          //       Navigator.pushReplacementNamed(context, '/register');
-          //     });
-          //   },
-          // )
         ],
       ),
     );
