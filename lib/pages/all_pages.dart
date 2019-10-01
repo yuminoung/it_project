@@ -13,4 +13,5 @@ export 'landing.dart';
 export 'settings.dart';
 
 export 'family/family_create.dart';
-export 'family/family_create.dart';
+export 'family/family_join.dart';
+export 'family/family_view.dart';

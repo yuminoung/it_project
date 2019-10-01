@@ -40,12 +40,7 @@ class _UploadState extends State<Upload> {
     return Scaffold(
       appBar: CustomAppBar(
         title: 'Upload',
-        leading: CustomIconButton(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(Icons.close),
-        ),
+        leading: CustomPopButton(),
         trailing: CustomIconButton(
           icon: Icon(Icons.done),
           onTap: () async {

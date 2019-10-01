@@ -176,10 +176,8 @@ class _RegisterState extends State<Register> {
             Firestore.instance.collection('users').document(result.user.uid);
         await firestoreRef.setData(
           {
-            'id': result.user.uid,
             'first_name': _firstname.text,
             'last_name': _lastname.text,
-            'family': null,
           },
         );
         FirebaseUser account = result.user;
@@ -187,7 +185,8 @@ class _RegisterState extends State<Register> {
         userUpdateInfo.displayName = _firstname.text + ' ' + _lastname.text;
         account.updateProfile(userUpdateInfo);
         account.reload();
-        Navigator.pop(context);
+        Navigator.pushReplacement(context,
+            CustomSlideFromBottomPageRouteBuilder(widget: routes['/']));
       }).catchError((error) {
         print(error);
       });

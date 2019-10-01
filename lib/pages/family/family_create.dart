@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:it_project/widgets/all_widgets.dart';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:it_project/widgets/custom_progress_indicator.dart';
+import 'package:it_project/models/all_models.dart';
 
 class FamilyCreate extends StatefulWidget {
   @override
@@ -55,13 +53,7 @@ class _FamilyCreateState extends State<FamilyCreate> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        leading: CustomIconButton(
-          icon: Icon(Icons.close),
-          onTap: () {
-            FocusScope.of(context).unfocus();
-            Navigator.pop(context);
-          },
-        ),
+        leading: CustomPopButton(),
         title: 'Create a Family',
       ),
       body: IgnorePointer(
@@ -113,18 +105,22 @@ class _FamilyCreateState extends State<FamilyCreate> {
           FocusScope.of(context).unfocus();
           if (isValidated) {
             isLoading = true;
-            final familyRef =
-                Firestore.instance.collection('families').document();
 
-            var currentUser = await FirebaseAuth.instance.currentUser();
-            var currentUserID = currentUser.uid;
-            var currentUsername = currentUser.displayName;
+            final currentUser = await UserModel.getUser();
 
-            // upload
-            await familyRef.setData({
+            var familyID = await FamilyModel.createFamily({
               'name': _familyName.text,
-              'members': {currentUserID: currentUsername},
+              'members': {currentUser.uid: currentUser.displayName},
+              'created_at': DateTime.now()
             });
+
+            await UserModel.updateUserDocument({
+              'families': {
+                familyID: _familyName.text,
+              }
+            });
+
+            UserModel.resetUserModel();
             Navigator.pop(context);
           }
         },

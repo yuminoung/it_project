@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:it_project/widgets/all_widgets.dart';
+import 'package:it_project/widgets/custom_progress_indicator.dart';
 
 class BottomHome extends StatefulWidget {
   @override
@@ -23,10 +24,7 @@ class _BottomHomeState extends State<BottomHome> {
           if (snapshot.hasError) return Text('Error: ${snapshot.error}');
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
-              return LinearProgressIndicator(
-                backgroundColor: Color.fromRGBO(250, 250, 250, 0),
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.redAccent),
-              );
+              return CustomProgressIndicator();
             default:
               return ListView(
                 padding: EdgeInsets.fromLTRB(8, 8, 8, 0),
