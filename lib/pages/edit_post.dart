@@ -13,7 +13,7 @@ class EditPostState extends State<EditPost> {
       appBar: CustomAppBar(
         title: 'Edit Post',
       ),
-      body: Text('edit post'),
+      body: Text('only changed to test git '),
     );
   }
 }
