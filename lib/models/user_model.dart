@@ -30,15 +30,20 @@ class UserModel {
   // a function to update the user document
   static Future<void> updateUserDocument(data) async {
     final user = await getUser();
-    await _userRef.document(user.uid).setData(data, merge: true);
-    resetUserModel();
+    await _userRef.document(user.uid).updateData(data);
+    await UserModel.resetUserModel();
   }
 
   // reset the static variables and get the new updated user document from firestore
-  static void resetUserModel() async {
+  static Future<void> resetUserModel() async {
     _user = null;
     _userDocument = null;
     await getUser();
     await getUserDocument();
+  }
+
+  static void cleanUserModel() async {
+    _user = null;
+    _userDocument = null;
   }
 }

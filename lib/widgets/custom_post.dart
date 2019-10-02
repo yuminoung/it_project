@@ -11,7 +11,15 @@ class CustomPost extends StatelessWidget {
   final Timestamp time;
   final String docID;
   final String username;
-  CustomPost({this.image, this.message, this.time, this.docID, this.username});
+  final String uid;
+
+  CustomPost(
+      {this.image,
+      this.message,
+      this.time,
+      this.docID,
+      this.username,
+      this.uid});
 
   Widget _buildImage(BuildContext context) {
     return ClipRRect(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CustomIconButton extends StatelessWidget {
-  final Icon icon;
+  final Widget icon;
   final Function onTap;
 
   CustomIconButton({@required this.icon, @required this.onTap});
@@ -11,7 +11,7 @@ class CustomIconButton extends StatelessWidget {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: onTap,
-      child: icon,
+      child: Center(child: icon),
     );
   }
 }

@@ -105,21 +105,7 @@ class _FamilyCreateState extends State<FamilyCreate> {
           FocusScope.of(context).unfocus();
           if (isValidated) {
             isLoading = true;
-
-            final currentUser = await UserModel.getUser();
-
-            var familyID = await FamilyModel.createFamily({
-              'name': _familyName.text,
-              'members': {currentUser.uid: currentUser.displayName},
-              'created_at': DateTime.now()
-            });
-
-            await UserModel.updateUserDocument({
-              'families': {
-                familyID: _familyName.text,
-              }
-            });
-
+            await FamilyModel.createFamily(_familyName.text);
             UserModel.resetUserModel();
             Navigator.pop(context);
           }

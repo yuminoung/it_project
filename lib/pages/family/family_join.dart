@@ -25,12 +25,13 @@ class _FamilyJoinState extends State<FamilyJoin> {
       appBar: CustomAppBar(
         leading: CustomPopButton(),
         title: 'Join a Family',
-        trailing: GestureDetector(
+        trailing: CustomIconButton(
           onTap: () {
             print('qr scanner');
           },
-          child: ImageIcon(
+          icon: ImageIcon(
             AssetImage('assets/icons/qr.png'),
+            size: 24,
           ),
         ),
       ),

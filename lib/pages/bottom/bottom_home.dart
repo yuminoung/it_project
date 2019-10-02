@@ -36,6 +36,7 @@ class _BottomHomeState extends State<BottomHome> {
                     image: document['image'],
                     docID: document.documentID,
                     username: document['user'],
+                    uid: document['uid'],
                   );
                 }).toList(),
               );

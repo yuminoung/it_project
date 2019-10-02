@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:it_project/widgets/all_widgets.dart';
 import 'package:it_project/routes.dart';
+import 'package:it_project/models/all_models.dart';
 
 class BottomMe extends StatefulWidget {
   @override
@@ -132,7 +133,8 @@ class _BottomMeState extends State<BottomMe> {
           ListTile(
             leading: ImageIcon(AssetImage('assets/icons/logout2.png')),
             title: Text('Logout'),
-            onTap: () {
+            onTap: () async {
+              UserModel.cleanUserModel();
               _auth.signOut().then((_) {
                 Navigator.pushReplacement(
                     context,

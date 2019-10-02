@@ -176,8 +176,8 @@ class _RegisterState extends State<Register> {
             Firestore.instance.collection('users').document(result.user.uid);
         await firestoreRef.setData(
           {
-            'first_name': _firstname.text,
-            'last_name': _lastname.text,
+            'displayName': _firstname.text + ' ' + _lastname.text,
+            'families': {}
           },
         );
         FirebaseUser account = result.user;

@@ -1,12 +1,12 @@
 import 'dart:io';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:it_project/widgets/all_widgets.dart';
 import 'package:it_project/widgets/custom_app_bar.dart';
+import 'package:it_project/models/all_models.dart';
 
 class Upload extends StatefulWidget {
   @override
@@ -49,16 +49,14 @@ class _UploadState extends State<Upload> {
               isLoading = true;
             });
             final ref = Firestore.instance.collection('artifacts').document();
-            var auth = await FirebaseAuth.instance.currentUser();
-            final userRef =
-                Firestore.instance.collection('users').document(auth.uid);
-            final userData = await userRef.get();
+
+            final user = await UserModel.getUserDocument();
+
             ref.setData({
               'message': _textFieldController.text,
               'created_at': DateTime.now(),
-              'user': userData.data['first_name'] +
-                  " " +
-                  userData.data['last_name'],
+              'user': user['displayName'],
+              'uid': user.documentID
             });
             if (_image != null) {
               StorageReference storageRef = FirebaseStorage.instance

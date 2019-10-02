@@ -38,7 +38,7 @@ class _BottomFamilyState extends State<BottomFamily> {
         future: UserModel.getUserDocument(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done &&
-              snapshot.data['families'] != null) {
+              snapshot.data['families'].length != 0) {
             Map<String, String> families =
                 snapshot.data['families'].cast<String, String>();
 

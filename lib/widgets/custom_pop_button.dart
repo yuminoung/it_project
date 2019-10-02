@@ -5,7 +5,7 @@ class CustomPopButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
-      child: Icon(Icons.close),
+      child: Center(child: Icon(Icons.close)),
       onTap: () {
         Navigator.pop(context);
       },

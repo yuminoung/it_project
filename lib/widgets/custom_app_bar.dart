@@ -26,7 +26,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             children: <Widget>[
               Expanded(
                 flex: 1,
-                child: leading ?? Container(),
+                child: Container(
+                      height: height,
+                      child: leading,
+                    ) ??
+                    Container(),
               ),
               Expanded(
                 flex: 2,
@@ -39,7 +43,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
               Expanded(
                 flex: 1,
-                child: trailing ?? Container(),
+                child: Container(
+                      height: height,
+                      child: trailing,
+                    ) ??
+                    Container(),
               ),
             ],
           ),
