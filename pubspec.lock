@@ -8,6 +8,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.3.0"
+  auto_size_text:
+    dependency: "direct main"
+    description:
+      name: auto_size_text
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.0"
   boolean_selector:
     dependency: transitive
     description:
@@ -88,6 +95,7 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+<<<<<<< HEAD
   font_awesome_flutter:
     dependency: "direct main"
     description:
@@ -97,6 +105,8 @@ packages:
     version: "8.5.0"
 <<<<<<< HEAD
 =======
+=======
+>>>>>>> 6f8d1202d2a79e96fccd569a1ec82f194c78436b
   http:
     dependency: transitive
     description:
@@ -163,7 +173,24 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.1"
+<<<<<<< HEAD
 >>>>>>> 82dc4a28d2982d5221a3fc111618aadd866e6193
+=======
+  qr:
+    dependency: transitive
+    description:
+      name: qr
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.0"
+  qr_flutter:
+    dependency: "direct main"
+    description:
+      name: qr_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.1"
+>>>>>>> 6f8d1202d2a79e96fccd569a1ec82f194c78436b
   quiver:
     dependency: transitive
     description:

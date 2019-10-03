@@ -21,25 +21,60 @@ class _HomeState extends State<Home> {
 
   List<String> _tabTitles = ['Artifacts', 'Family', 'Notifications', 'Me'];
 
+  Widget _buildAppBarTrailing(int index) {
+    if (index == 0) {
+      return CustomIconButton(
+        icon: Icon(Icons.camera_alt),
+        onTap: () {
+          Navigator.push(
+            context,
+            CustomSlideFromBottomPageRouteBuilder(
+              widget: routes['/upload'],
+            ),
+          );
+        },
+      );
+    } else if (index == 1) {
+      return PopupMenuButton(
+        onSelected: (value) {
+          if (value == 'join') {
+            Navigator.push(
+              context,
+              CustomSlideFromBottomPageRouteBuilder(
+                widget: routes['/family/join'],
+              ),
+            );
+          } else if (value == 'create') {
+            Navigator.push(
+              context,
+              CustomSlideFromBottomPageRouteBuilder(
+                widget: routes['/family/create'],
+              ),
+            );
+          }
+        },
+        icon: Icon(Icons.add),
+        itemBuilder: (context) => [
+          PopupMenuItem(
+            value: 'join',
+            child: Text('Join'),
+          ),
+          PopupMenuItem(
+            value: 'create',
+            child: Text('Create'),
+          )
+        ],
+      );
+    }
+    return Container();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
         title: _tabTitles[_index],
-        trailing: _index == 0
-            ? CustomIconButton(
-                icon: Icon(Icons.camera_alt),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    CustomSlideFromBottomPageRouteBuilder(
-                      widget: routes['/upload'],
-                    ),
-                  );
-                },
-              )
-            : Container(),
+        trailing: _buildAppBarTrailing(_index),
       ),
       body: _tabs[_index],
       bottomNavigationBar: CustomBottomNavigationBar(

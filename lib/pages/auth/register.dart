@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:it_project/widgets/all_widgets.dart';
+import 'package:it_project/routes.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -16,9 +18,8 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: Container(),
-        title: Text('Register'),
+      appBar: CustomAppBar(
+        title: 'Register',
       ),
       body: Container(
         padding: EdgeInsets.all(8.0),
@@ -34,7 +35,12 @@ class _RegisterState extends State<Register> {
               FlatButton(
                 child: Text('Already have an account?'),
                 onPressed: () {
-                  Navigator.pushReplacementNamed(context, '/login');
+                  Navigator.pushReplacement(
+                    context,
+                    CustomSlideFromBottomPageRouteBuilder(
+                      widget: routes['/login'],
+                    ),
+                  );
                 },
               )
             ],
@@ -79,7 +85,6 @@ class _RegisterState extends State<Register> {
       ),
     );
   }
-
 
   Widget _emailField() {
     return Padding(
@@ -157,8 +162,10 @@ class _RegisterState extends State<Register> {
   }
 
   void registerUser() async {
-    if (_password != null && _email != null && 
-    _lastname != null && _firstname != null) {
+    if (_password != null &&
+        _email != null &&
+        _lastname != null &&
+        _firstname != null) {
       final auth = FirebaseAuth.instance;
 
       auth
@@ -169,10 +176,8 @@ class _RegisterState extends State<Register> {
             Firestore.instance.collection('users').document(result.user.uid);
         await firestoreRef.setData(
           {
-            'id': result.user.uid,
-            'first_name': _firstname.text,
-            'last_name': _lastname.text,
-            'family': null,
+            'displayName': _firstname.text + ' ' + _lastname.text,
+            'families': {}
           },
         );
         FirebaseUser account = result.user;
@@ -180,7 +185,8 @@ class _RegisterState extends State<Register> {
         userUpdateInfo.displayName = _firstname.text + ' ' + _lastname.text;
         account.updateProfile(userUpdateInfo);
         account.reload();
-        Navigator.pushReplacementNamed(context, '/');
+        Navigator.pushReplacement(context,
+            CustomSlideFromBottomPageRouteBuilder(widget: routes['/']));
       }).catchError((error) {
         print(error);
       });

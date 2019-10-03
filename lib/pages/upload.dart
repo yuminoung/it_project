@@ -1,10 +1,12 @@
 import 'dart:io';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:it_project/widgets/all_widgets.dart';
+import 'package:it_project/widgets/custom_app_bar.dart';
+import 'package:it_project/models/all_models.dart';
 
 class Upload extends StatefulWidget {
   @override
@@ -36,41 +38,43 @@ class _UploadState extends State<Upload> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Upload'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.done),
-            onPressed: () async {
-              FocusScope.of(context).unfocus();
-              setState(() {
-                isLoading = true;
-              });
-              final ref = Firestore.instance.collection('artifacts').document();
-              var auth = await FirebaseAuth.instance.currentUser();
-              final userRef = Firestore.instance.collection('users').document(auth.uid);
-              final userData = await userRef.get();
+      appBar: CustomAppBar(
+        title: 'Upload',
+        leading: CustomPopButton(),
+        trailing: CustomIconButton(
+          icon: Icon(Icons.done),
+          onTap: () async {
+            FocusScope.of(context).unfocus();
+            setState(() {
+              isLoading = true;
+            });
+            final ref = Firestore.instance.collection('artifacts').document();
+
+            final user = await UserModel.getUserDocument();
+
+            ref.setData({
+              'message': _textFieldController.text,
+              'created_at': DateTime.now(),
+              'user': user['displayName'],
+              'uid': user.documentID
+            });
+            if (_image != null) {
+              StorageReference storageRef = FirebaseStorage.instance
+                  .ref()
+                  .child('images/' + ref.documentID.toString());
+              StorageUploadTask uploadTask = storageRef.putFile(_image);
+              StorageTaskSnapshot downloadUrl = await uploadTask.onComplete;
+              String url = await downloadUrl.ref.getDownloadURL();
               ref.setData({
-                'message': _textFieldController.text,
-                'created_at': DateTime.now(),
-                'user': userData.data['first_name'] + " " + userData.data['last_name'],
-              });
-              if (_image != null) {
-                StorageReference storageRef = FirebaseStorage.instance
-                    .ref()
-                    .child('images/' + ref.documentID.toString());
-                StorageUploadTask uploadTask = storageRef.putFile(_image);
-                StorageTaskSnapshot downloadUrl = await uploadTask.onComplete;
-                String url = await downloadUrl.ref.getDownloadURL();
-                ref.setData({
-                  'image': url,
-                }, merge: true);
-              }
-              Navigator.pop(context);
-            },
-          ),
-        ],
+                'image': url,
+              }, merge: true);
+            }
+            Navigator.pop(context);
+          },
+        ),
       ),
+
+      // ignore pointer is to ignore all touch event when uploading is true
       body: IgnorePointer(
         ignoring: isLoading,
         child: Stack(
@@ -144,8 +148,9 @@ class _UploadState extends State<Upload> {
               ),
             ),
             isLoading
-                ? Center(
-                    child: CircularProgressIndicator(),
+                ? LinearProgressIndicator(
+                    backgroundColor: Color.fromRGBO(250, 250, 250, 0),
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.redAccent),
                   )
                 : Container()
           ],

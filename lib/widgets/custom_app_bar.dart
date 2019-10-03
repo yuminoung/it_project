@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final double height;
@@ -25,19 +26,28 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             children: <Widget>[
               Expanded(
                 flex: 1,
-                child: leading ?? Container(),
+                child: Container(
+                      height: height,
+                      child: leading,
+                    ) ??
+                    Container(),
               ),
               Expanded(
                 flex: 2,
-                child: Text(
+                child: AutoSizeText(
                   title.toUpperCase(),
                   style: Theme.of(context).textTheme.title,
                   textAlign: TextAlign.center,
+                  maxLines: 1,
                 ),
               ),
               Expanded(
                 flex: 1,
-                child: trailing ?? Container(),
+                child: Container(
+                      height: height,
+                      child: trailing,
+                    ) ??
+                    Container(),
               ),
             ],
           ),

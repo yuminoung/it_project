@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:it_project/widgets/all_widgets.dart';
+import 'package:it_project/widgets/custom_progress_indicator.dart';
 
 class BottomHome extends StatefulWidget {
   @override
@@ -23,7 +24,7 @@ class _BottomHomeState extends State<BottomHome> {
           if (snapshot.hasError) return Text('Error: ${snapshot.error}');
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
-              return LinearProgressIndicator();
+              return CustomProgressIndicator();
             default:
               return ListView(
                 padding: EdgeInsets.fromLTRB(8, 8, 8, 0),
@@ -35,6 +36,7 @@ class _BottomHomeState extends State<BottomHome> {
                     image: document['image'],
                     docID: document.documentID,
                     username: document['user'],
+                    uid: document['uid'],
                   );
                 }).toList(),
               );
