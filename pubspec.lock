@@ -50,6 +50,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.14.11"
+  convert:
+    dependency: transitive
+    description:
+      name: convert
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.1"
+  crypto:
+    dependency: transitive
+    description:
+      name: crypto
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.3"
   cupertino_icons:
     dependency: "direct main"
     description:
@@ -95,18 +109,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-<<<<<<< HEAD
-  font_awesome_flutter:
-    dependency: "direct main"
-    description:
-      name: font_awesome_flutter
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "8.5.0"
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 6f8d1202d2a79e96fccd569a1ec82f194c78436b
   http:
     dependency: transitive
     description:
@@ -121,7 +123,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.3"
->>>>>>> 82dc4a28d2982d5221a3fc111618aadd866e6193
   image_picker:
     dependency: "direct main"
     description:
@@ -164,8 +165,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.0+1"
-<<<<<<< HEAD
-=======
   platform:
     dependency: transitive
     description:
@@ -173,9 +172,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.1"
-<<<<<<< HEAD
->>>>>>> 82dc4a28d2982d5221a3fc111618aadd866e6193
-=======
   qr:
     dependency: transitive
     description:
@@ -190,7 +186,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.1"
->>>>>>> 6f8d1202d2a79e96fccd569a1ec82f194c78436b
   quiver:
     dependency: transitive
     description:
@@ -272,8 +267,6 @@ packages:
       name: uuid
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< HEAD
-=======
     version: "2.0.2"
   vector_math:
     dependency: transitive
@@ -281,7 +274,6 @@ packages:
       name: vector_math
       url: "https://pub.dartlang.org"
     source: hosted
->>>>>>> 82dc4a28d2982d5221a3fc111618aadd866e6193
     version: "2.0.8"
 sdks:
   dart: ">=2.2.2 <3.0.0"
