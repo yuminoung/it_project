@@ -51,7 +51,7 @@ class _UploadState extends State<Upload> {
             final ref = Firestore.instance.collection('artifacts').document();
 
             final user = await UserModel.getUserDocument();
-
+            print(user['displayName']);
             ref.setData({
               'message': _textFieldController.text,
               'created_at': DateTime.now(),

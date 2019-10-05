@@ -27,6 +27,11 @@ class UserModel {
     return _userDocument;
   }
 
+  static Future<DocumentSnapshot> getUserByID(String uid) async {
+    _userDocument = await _userRef.document(uid).get();
+    return _userDocument;
+  }
+
   // a function to update the user document
   static Future<void> updateUserDocument(data) async {
     final user = await getUser();

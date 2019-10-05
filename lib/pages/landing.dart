@@ -35,7 +35,7 @@ class _LandingPageState extends State<LandingPage> {
       body: Center(
         child: Text(
           "IT PROJECT\nHELLO WOLRD\n😆 OLIVER\n🤨 HAITIAN\n😋 YUMIN\n😎 ZIRUN",
-          style: TextStyle(fontFamily: 'Inconsolata', fontSize: 34),
+          style: TextStyle(fontFamily: 'Inconsolata', fontSize: 34,),
         ),
       ),
     );

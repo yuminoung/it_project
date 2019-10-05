@@ -4,8 +4,9 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:it_project/widgets/all_widgets.dart';
+import 'package:it_project/models/all_models.dart';
+class CustomPost extends StatefulWidget {
 
-class CustomPost extends StatelessWidget {
   final String image;
   final String message;
   final Timestamp time;
@@ -21,6 +22,21 @@ class CustomPost extends StatelessWidget {
       this.username,
       this.uid});
 
+  @override
+  _CustomPostState createState() => _CustomPostState();
+}
+
+class _CustomPostState extends State<CustomPost> {
+
+  var name;
+
+
+  Future<String> _getUsername() async {
+    var name = await UserModel.getUserByID(widget.uid);
+    print(name.data);
+    return name.data['displayName'].toString();
+  }
+
   Widget _buildImage(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.only(
@@ -31,7 +47,7 @@ class CustomPost extends StatelessWidget {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.width,
         fit: BoxFit.cover,
-        imageUrl: image,
+        imageUrl: widget.image,
         placeholder: (context, url) {
           return Container(
               padding: EdgeInsets.all(16),
@@ -62,23 +78,28 @@ class CustomPost extends StatelessWidget {
           ),
           Container(
             padding: EdgeInsets.all(8.0),
-            child: Text(
-              username,
+            child: FutureBuilder(future: _getUsername(),builder: (context, snapshot) {
+              if (ConnectionState.done == snapshot.connectionState) {
+                print(snapshot);
+                return Text(snapshot.data);
+              } 
+              return Text('username');
+
+            },),
               // style: Theme.of(context).textTheme.title,
-            ),
           ),
           Container(
             child:
-                Text(_humanReadableTime(time), style: TextStyle(fontSize: 10)),
+                Text(_humanReadableTime(widget.time), style: TextStyle(fontSize: 10)),
           ),
           Expanded(
             child: Container(
               child: PopupMenuButton(
                 onSelected: (result) {
                   if (result == 'delete') {
-                    Firestore.instance.document('artifacts/' + docID).delete();
+                    Firestore.instance.document('artifacts/' + widget.docID).delete();
                     StorageReference ref =
-                        FirebaseStorage.instance.ref().child('images/' + docID);
+                        FirebaseStorage.instance.ref().child('images/' + widget.docID);
                     ref.delete();
                   }
                   if (result == 'edit') {
@@ -109,7 +130,7 @@ class CustomPost extends StatelessWidget {
     return Container(
       alignment: Alignment.centerLeft,
       child: Text(
-        message,
+        widget.message,
         style: TextStyle(fontFamily: 'Roboto'),
         // textAlign: TextAlign.left,
       ),
@@ -146,8 +167,8 @@ class CustomPost extends StatelessWidget {
         child: Column(
           children: <Widget>[
             _buildUser(),
-            (message != null) ? _buildMessage() : Container(),
-            (image != null) ? _buildImage(context) : Container(),
+            (widget.message != null) ? _buildMessage() : Container(),
+            (widget.image != null) ? _buildImage(context) : Container(),
             CustomDivider(),
           ],
         ),
