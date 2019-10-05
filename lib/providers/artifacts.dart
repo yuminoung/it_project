@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -7,17 +9,16 @@ class Artifact {
   Timestamp time;
   String docID;
   String username;
-  String uid;
-  Artifact(
-      this.docID, this.image, this.message, this.time, this.uid, this.username);
+  // String uid;
+  Artifact(this.docID, this.image, this.message, this.time, this.username);
 }
 
 class Artifacts with ChangeNotifier {
   String userID;
-  List<Artifact> _artifact = [];
+  List<Artifact> _artifacts = [];
   Artifacts(this.userID);
   List<Artifact> get artifacts {
-    return [..._artifact];
+    return [..._artifacts];
   }
 
   Future<void> fetchAndSetArtifacts() async {
@@ -29,7 +30,13 @@ class Artifacts with ChangeNotifier {
         .getDocuments();
     var list = all.documents;
     print(list.length);
-    print(list.map((x) => {x.data}).toList());
+    var usernames = list.map((x) => {x.data['user']}).toList();
+    var images = list.map((x) => {x.data['imgae']}).toList();
+    var messages = list.map((x) => {x.data['message']}).toList();
+    var times = list.map((x) => {x.data['time']}).toList();
+    var docIDs = list.map((x) => {x.data['docID']}).toList();
+
+    //_artifacts.add(Artifact())
 
     // all.map((arti) {
     //   print('ffff');
