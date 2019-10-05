@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:it_project/pages/all_pages.dart';
+import 'package:it_project/routes.dart';
 
 import 'package:it_project/widgets/all_widgets.dart';
 
@@ -46,7 +46,7 @@ class CustomPost extends StatelessWidget {
     );
   }
 
-  Widget _buildUser() {
+  Widget _buildUser(BuildContext context) {
     return Container(
       padding: EdgeInsets.fromLTRB(16, 16, 16, 8),
       child: Row(
@@ -92,8 +92,7 @@ class CustomPost extends StatelessWidget {
                     child: GestureDetector(
                       child: Text('edit'),
                       onTap: () {
-                        Navigator.pushReplacementNamed(
-                            context, EditPost.routeName,
+                        Navigator.pushReplacementNamed(context, '/edit',
                             arguments: {
                               'image': image,
                               'message': message,
@@ -158,7 +157,7 @@ class CustomPost extends StatelessWidget {
         color: Colors.white,
         child: Column(
           children: <Widget>[
-            _buildUser(),
+            _buildUser(context),
             (message != null) ? _buildMessage() : Container(),
             (image != null) ? _buildImage(context) : Container(),
             CustomDivider(),

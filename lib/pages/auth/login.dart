@@ -1,9 +1,12 @@
+import 'dart:async';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:it_project/providers/auth.dart';
 import 'package:it_project/widgets/all_widgets.dart';
 import 'package:it_project/routes.dart';
 import 'package:provider/provider.dart';
+import '../../providers/auth.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -100,9 +103,31 @@ class _LoginState extends State<Login> {
           FocusScope.of(context).unfocus();
           Provider.of<Auth>(context, listen: false)
               .loginUser(_email.text, _password.text, context);
+
+          // var test = FirebaseAuth.instance.signInWithCustomToken();
+          // FirebaseAuth.instance.signInWithCustomToken()
+          // print('current user is $test');
         },
       ),
       padding: EdgeInsets.all(8.0),
     );
   }
+
+  // Future<void> loginUser() async {
+  //   if (_password != null && _email != null) {
+  //     final auth = FirebaseAuth.instance;
+  //     // var user = FirebaseAuth.instance.currentUser();
+  //     // IdTokenResult idTokenResult = await user.getIdToken();
+  //     auth
+  //         .signInWithEmailAndPassword(
+  //             email: _email.text, password: _password.text)
+  //         .then((result) {
+  //       print('ufutdfju is $result');
+  //       Navigator.pushReplacement(context,
+  //           CustomSlideFromBottomPageRouteBuilder(widget: routes['/']));
+  //     }).catchError((error) {
+  //       print(error);
+  //     });
+  //   }
+  // }
 }

@@ -21,15 +21,20 @@ class _UploadState extends State<Upload> {
   //get the image from gallery
   Future getImageFromPhoto() async {
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    print('ssssssfd');
     setState(() {
       _image = image;
     });
     Navigator.pop(context);
+    FocusScope.of(context).unfocus();
   }
 
   Future getImageFromCamera() async {
     Navigator.pop(context);
-    var image = await ImagePicker.pickImage(source: ImageSource.camera);
+    var image =
+        await ImagePicker.pickImage(source: ImageSource.camera).then((_) {
+      FocusScope.of(context).unfocus();
+    });
     setState(() {
       _image = image;
     });
@@ -44,7 +49,8 @@ class _UploadState extends State<Upload> {
         trailing: CustomIconButton(
           icon: Icon(Icons.done),
           onTap: () async {
-            FocusScope.of(context).unfocus();
+            print('called +1');
+
             setState(() {
               isLoading = true;
             });
@@ -91,6 +97,9 @@ class _UploadState extends State<Upload> {
                             expands: true,
                             cursorColor: Colors.redAccent,
                             controller: _textFieldController,
+                            onSubmitted: (_) {
+                              FocusScope.of(context).unfocus();
+                            },
                             maxLines: null,
                             decoration:
                                 InputDecoration(border: InputBorder.none),

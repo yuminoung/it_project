@@ -163,4 +163,35 @@ class _RegisterState extends State<Register> {
       padding: EdgeInsets.all(8.0),
     );
   }
+
+  void registerUser() async {
+    final auth = FirebaseAuth.instance;
+    if (_password != null &&
+        _email != null &&
+        _lastname != null &&
+        _firstname != null) {
+      auth
+          .createUserWithEmailAndPassword(
+              email: _email.text, password: _password.text)
+          .then((result) async {
+        final firestoreRef =
+            Firestore.instance.collection('users').document(result.user.uid);
+        await firestoreRef.setData(
+          {
+            'displayName': _firstname.text + ' ' + _lastname.text,
+            'families': {}
+          },
+        );
+        FirebaseUser account = result.user;
+        var userUpdateInfo = new UserUpdateInfo();
+        userUpdateInfo.displayName = _firstname.text + ' ' + _lastname.text;
+        account.updateProfile(userUpdateInfo);
+        account.reload();
+        Navigator.pushReplacement(context,
+            CustomSlideFromBottomPageRouteBuilder(widget: routes['/']));
+      }).catchError((error) {
+        print(error);
+      });
+    }
+  }
 }

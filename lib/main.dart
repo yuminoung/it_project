@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:it_project/pages/edit_post.dart';
-import 'package:it_project/providers/artifacts.dart';
-
+import 'package:it_project/pages/upload.dart';
 import 'routes.dart';
 import 'theme.dart';
 import 'package:provider/provider.dart';
@@ -22,9 +21,6 @@ class _MyAppState extends State<MyApp> {
         providers: [
           ChangeNotifierProvider.value(
             value: (Auth()),
-          ),
-          ChangeNotifierProxyProvider<Auth, Artifacts>(
-            builder: (ctx, auth, previousOrders) => Artifacts(auth.userId),
           )
         ],
         child: Consumer<Auth>(
@@ -34,7 +30,7 @@ class _MyAppState extends State<MyApp> {
                   home: routes['/landing'],
                   routes: {
                     EditPost.routeName: (ctx) => EditPost(),
-                    // '/upload': (ctx) => Upload()
+                    '/upload': (ctx) => Upload()
                   },
                 )));
   }

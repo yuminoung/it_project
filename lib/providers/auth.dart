@@ -14,7 +14,7 @@ class Auth with ChangeNotifier {
     return _userId;
   }
 
-  void loginUser(String email, String password, BuildContext context) {
+  Future<void> loginUser(String email, String password, BuildContext context) {
     if (password != null && email != null) {
       // final auth = FirebaseAuth.instance;
       // var user = FirebaseAuth.instance.currentUser();
@@ -36,7 +36,7 @@ class Auth with ChangeNotifier {
     }
   }
 
-  void registerUser(String email, String password, String lastname,
+  Future<void> registerUser(String email, String password, String lastname,
       String firstname, BuildContext context) {
     final auth = FirebaseAuth.instance;
     if (password != null &&

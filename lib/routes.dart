@@ -17,7 +17,7 @@ final routes = {
   '/bottom/family': BottomFamily(),
 
   // others
-  //'/edit': EditPost(),
+  '/edit': EditPost(),
   '/upload': Upload(),
   '/settings': Settings(),
   '/': Home(),

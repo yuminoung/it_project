@@ -1,6 +1,6 @@
 export 'home.dart';
 export 'upload.dart';
-export 'edit_post.dart';
+
 export 'bottom/bottom_home.dart';
 export 'bottom/bottom_me.dart';
 export 'bottom/bottom_family.dart';
