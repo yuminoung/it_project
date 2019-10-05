@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:it_project/providers/artifacts.dart';
 import 'package:it_project/routes.dart';
 import 'package:it_project/widgets/custom_bottom_navigation_bar.dart';
+import 'package:provider/provider.dart';
 
 import '../widgets/all_widgets.dart';
 
@@ -71,6 +73,9 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    print('home build');
+
+    Provider.of<Artifacts>(context, listen: false).fetchAndSetArtifacts();
     return Scaffold(
       appBar: CustomAppBar(
         title: _tabTitles[_index],

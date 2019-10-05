@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:it_project/pages/all_pages.dart';
 
 import 'package:it_project/widgets/all_widgets.dart';
 
@@ -88,8 +89,20 @@ class CustomPost extends StatelessWidget {
                 child: Icon(Icons.more_horiz),
                 itemBuilder: (context) => [
                   PopupMenuItem(
-                    value: 'edit',
-                    child: Text('Edit'),
+                    child: GestureDetector(
+                      child: Text('edit'),
+                      onTap: () {
+                        Navigator.pushReplacementNamed(
+                            context, EditPost.routeName,
+                            arguments: {
+                              'image': image,
+                              'message': message,
+                              'time': time,
+                              'docID': docID,
+                              'username': username,
+                            });
+                      },
+                    ),
                   ),
                   PopupMenuItem(
                     value: 'delete',
