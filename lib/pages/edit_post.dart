@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:it_project/providers/artifacts.dart';
 import 'package:it_project/widgets/all_widgets.dart';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:provider/provider.dart';
 
 class EditPost extends StatefulWidget {
   static const routeName = '/edit';
@@ -36,6 +38,7 @@ class EditPostState extends State<EditPost> {
   }
 
   Widget build(BuildContext context) {
+    Provider.of<Artifacts>(context, listen: false).fetchAndSetArtifacts();
     return Scaffold(
         appBar: AppBar(
           title: Text('Edit Post'),

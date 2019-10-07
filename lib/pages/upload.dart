@@ -1,12 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+import 'package:it_project/providers/artifacts.dart';
 import 'package:it_project/widgets/all_widgets.dart';
 import 'package:it_project/widgets/custom_app_bar.dart';
-import 'package:it_project/models/all_models.dart';
+import 'package:provider/provider.dart';
 
 class Upload extends StatefulWidget {
   @override
@@ -21,7 +20,7 @@ class _UploadState extends State<Upload> {
   //get the image from gallery
   Future getImageFromPhoto() async {
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
-    print('ssssssfd');
+
     setState(() {
       _image = image;
     });
@@ -49,32 +48,11 @@ class _UploadState extends State<Upload> {
         trailing: CustomIconButton(
           icon: Icon(Icons.done),
           onTap: () async {
-            print('called +1');
-
             setState(() {
               isLoading = true;
             });
-            final ref = Firestore.instance.collection('artifacts').document();
-
-            final user = await UserModel.getUserDocument();
-
-            ref.setData({
-              'message': _textFieldController.text,
-              'created_at': DateTime.now(),
-              'user': user['displayName'],
-              'uid': user.documentID
-            });
-            if (_image != null) {
-              StorageReference storageRef = FirebaseStorage.instance
-                  .ref()
-                  .child('images/' + ref.documentID.toString());
-              StorageUploadTask uploadTask = storageRef.putFile(_image);
-              StorageTaskSnapshot downloadUrl = await uploadTask.onComplete;
-              String url = await downloadUrl.ref.getDownloadURL();
-              ref.setData({
-                'image': url,
-              }, merge: true);
-            }
+            await Provider.of<Artifacts>(context)
+                .addArtifact(_textFieldController.text, _image);
             Navigator.pop(context);
           },
         ),

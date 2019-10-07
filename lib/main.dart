@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:it_project/pages/edit_post.dart';
 import 'package:it_project/pages/upload.dart';
+import 'package:it_project/providers/artifacts.dart';
 import 'routes.dart';
 import 'theme.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +22,10 @@ class _MyAppState extends State<MyApp> {
         providers: [
           ChangeNotifierProvider.value(
             value: (Auth()),
+          ),
+          ChangeNotifierProxyProvider<Auth, Artifacts>(
+            builder: (ctx, auth, previousArtifacts) =>
+                Artifacts(auth.userId, auth.displayName),
           )
         ],
         child: Consumer<Auth>(

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:it_project/routes.dart';
 
 import 'package:it_project/widgets/all_widgets.dart';
 
@@ -64,7 +63,7 @@ class CustomPost extends StatelessWidget {
           Container(
             padding: EdgeInsets.all(8.0),
             child: Text(
-              username,
+              username ?? 'no usrname',
               // style: Theme.of(context).textTheme.title,
             ),
           ),
@@ -121,7 +120,7 @@ class CustomPost extends StatelessWidget {
     return Container(
       alignment: Alignment.centerLeft,
       child: Text(
-        message,
+        message ?? 'default no input',
         style: TextStyle(fontFamily: 'Roboto'),
         // textAlign: TextAlign.left,
       ),

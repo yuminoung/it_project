@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -9,9 +7,18 @@ import '../routes.dart';
 
 class Auth with ChangeNotifier {
   String _userId;
+  String _displayName;
 
   String get userId {
+    print('userID in Authg is $_userId');
     return _userId;
+  }
+
+  String get displayName {
+    // var document =
+    //     await Firestore.instance.collection("users").document(_userId).get();
+    print('display name in Auth is $_displayName');
+    return _displayName;
   }
 
   Future<void> loginUser(String email, String password, BuildContext context) {
@@ -24,9 +31,10 @@ class Auth with ChangeNotifier {
           .signInWithEmailAndPassword(email: email, password: password)
           .then((result) {
         _userId = result.user.uid;
+        _displayName = result.user.displayName;
+        print('login :name is$_displayName id is $_userId');
         notifyListeners();
-        print('result is $result');
-        print('userid is $_userId');
+
         Navigator.pushReplacement(context,
             CustomSlideFromBottomPageRouteBuilder(widget: routes['/']));
         return result;
@@ -34,6 +42,7 @@ class Auth with ChangeNotifier {
         print(error);
       });
     }
+    return null;
   }
 
   Future<void> registerUser(String email, String password, String lastname,
@@ -65,5 +74,28 @@ class Auth with ChangeNotifier {
         print(error);
       });
     }
+    return null;
+  }
+
+  Future<void> updateUser(
+      String lastname, String firstname, BuildContext context) async {
+    print('updateUser called');
+    if (lastname != null && firstname != null) {
+      await FirebaseAuth.instance.currentUser().then((result) async {
+        await Firestore.instance
+            .collection('users')
+            .document(result.uid)
+            .setData({'displayName': firstname + ' ' + lastname});
+        _displayName = firstname + ' ' + lastname;
+
+        var userUpdateInfo = new UserUpdateInfo();
+        userUpdateInfo.displayName = firstname + ' ' + lastname;
+        result.updateProfile(userUpdateInfo);
+        result.reload();
+        Navigator.pop(context);
+      });
+    }
+    print('new name is $_displayName id is $_userId');
+    notifyListeners();
   }
 }
