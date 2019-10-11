@@ -45,7 +45,7 @@ class CustomPost extends StatelessWidget {
     );
   }
 
-  Widget _buildUser() {
+  Widget _buildUser(BuildContext context) {
     return Container(
       padding: EdgeInsets.fromLTRB(16, 16, 16, 8),
       child: Row(
@@ -63,7 +63,7 @@ class CustomPost extends StatelessWidget {
           Container(
             padding: EdgeInsets.all(8.0),
             child: Text(
-              username,
+              username ?? 'no usrname',
               // style: Theme.of(context).textTheme.title,
             ),
           ),
@@ -88,8 +88,19 @@ class CustomPost extends StatelessWidget {
                 child: Icon(Icons.more_horiz),
                 itemBuilder: (context) => [
                   PopupMenuItem(
-                    value: 'edit',
-                    child: Text('Edit'),
+                    child: GestureDetector(
+                      child: Text('edit'),
+                      onTap: () {
+                        Navigator.pushReplacementNamed(context, '/edit',
+                            arguments: {
+                              'image': image,
+                              'message': message,
+                              'time': time,
+                              'docID': docID,
+                              'username': username,
+                            });
+                      },
+                    ),
                   ),
                   PopupMenuItem(
                     value: 'delete',
@@ -109,7 +120,7 @@ class CustomPost extends StatelessWidget {
     return Container(
       alignment: Alignment.centerLeft,
       child: Text(
-        message,
+        message ?? 'default no input',
         style: TextStyle(fontFamily: 'Roboto'),
         // textAlign: TextAlign.left,
       ),
@@ -145,7 +156,7 @@ class CustomPost extends StatelessWidget {
         color: Colors.white,
         child: Column(
           children: <Widget>[
-            _buildUser(),
+            _buildUser(context),
             (message != null) ? _buildMessage() : Container(),
             (image != null) ? _buildImage(context) : Container(),
             CustomDivider(),
