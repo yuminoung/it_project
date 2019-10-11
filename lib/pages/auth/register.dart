@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:it_project/providers/auth.dart';
 import 'package:it_project/widgets/all_widgets.dart';
 import 'package:it_project/routes.dart';
+import 'package:provider/provider.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -151,7 +153,8 @@ class _RegisterState extends State<Register> {
         padding: EdgeInsets.all(16.0),
         child: Text('Register'),
         onPressed: () {
-          registerUser();
+          Provider.of<Auth>(context, listen: false).registerUser(_email.text,
+              _password.text, _lastname.text, _firstname.text, context);
           FocusScope.of(context).unfocus();
           print(_password.text);
           print(_email.text);
@@ -162,12 +165,11 @@ class _RegisterState extends State<Register> {
   }
 
   void registerUser() async {
+    final auth = FirebaseAuth.instance;
     if (_password != null &&
         _email != null &&
         _lastname != null &&
         _firstname != null) {
-      final auth = FirebaseAuth.instance;
-
       auth
           .createUserWithEmailAndPassword(
               email: _email.text, password: _password.text)

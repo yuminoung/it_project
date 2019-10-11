@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:it_project/providers/auth.dart';
 import 'package:it_project/widgets/all_widgets.dart';
+import 'package:provider/provider.dart';
 
 class Settings extends StatefulWidget {
   @override
@@ -81,7 +83,8 @@ class _SettingsState extends State<Settings> {
         padding: EdgeInsets.all(16.0),
         child: Text('Confirm Changes'),
         onPressed: () {
-          updateUser();
+          Provider.of<Auth>(context, listen: false)
+              .updateUser(_lastname.text, _firstname.text, context);
           FocusScope.of(context).unfocus();
         },
       ),
@@ -89,18 +92,19 @@ class _SettingsState extends State<Settings> {
     );
   }
 
-  void updateUser() async {
-    if (_lastname.text != null && _firstname.text != null) {
+  void updateUser(
+      String lastname, String firstname, BuildContext context) async {
+    if (lastname != null && firstname != null) {
       await FirebaseAuth.instance.currentUser().then((result) async {
         await Firestore.instance
             .collection('users')
             .document(result.uid)
-            .updateData(
-                {'first_name': _firstname.text, 'last_name': _lastname.text});
+            .setData({'displayName': firstname + ' ' + lastname});
         var userUpdateInfo = new UserUpdateInfo();
-        userUpdateInfo.displayName = _firstname.text + ' ' + _lastname.text;
+        userUpdateInfo.displayName = firstname + ' ' + lastname;
         result.updateProfile(userUpdateInfo);
         result.reload();
+
         Navigator.pop(context);
       });
     }
