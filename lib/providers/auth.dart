@@ -4,8 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:it_project/widgets/custom_slide_from_bottom_page_route_builder.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:it_project/models/user_model.dart';
+
 import '../routes.dart';
 
 class Auth with ChangeNotifier {
@@ -31,8 +31,6 @@ class Auth with ChangeNotifier {
   Future<void> loginUser(
       String email, String password, BuildContext context) async {
     if (password != null && email != null) {
-      final prefs = await SharedPreferences.getInstance();
-
       // final auth = FirebaseAuth.instance;
       // var user = FirebaseAuth.instance.currentUser();
       // IdTokenResult idTokenResult = await user.getIdToken();
@@ -50,7 +48,6 @@ class Auth with ChangeNotifier {
             '_displayName': _displayName,
           },
         );
-        prefs.setString('userData', userData);
         Navigator.pushReplacement(context,
             CustomSlideFromBottomPageRouteBuilder(widget: routes['/']));
         return result;
@@ -105,12 +102,17 @@ class Auth with ChangeNotifier {
   Future<String> updateUser(
       String lastname, String firstname, BuildContext context) async {
     print('updateUser called');
+    DocumentSnapshot userDocument = await UserModel.getUserDocument();
+    var families = userDocument.data['families'];
     if (lastname != null && firstname != null) {
       await FirebaseAuth.instance.currentUser().then((result) async {
         await Firestore.instance
             .collection('users')
             .document(result.uid)
-            .setData({'displayName': firstname + ' ' + lastname}, merge: true);
+            .setData({
+          'displayName': firstname + ' ' + lastname,
+          'families': families
+        });
         _displayName = firstname + ' ' + lastname;
 
         var userUpdateInfo = new UserUpdateInfo();

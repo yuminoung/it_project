@@ -15,7 +15,7 @@ class _HomeState extends State<Home> {
   List<Widget> _tabs = [
     routes['/bottom/home'],
     routes['/bottom/family'],
-    Container(color: Colors.green),
+    routes['/bottom/notice'],
     routes['/bottom/me']
   ];
 
