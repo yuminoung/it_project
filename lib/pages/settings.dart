@@ -84,7 +84,10 @@ class _SettingsState extends State<Settings> {
         child: Text('Confirm Changes'),
         onPressed: () {
           Provider.of<Auth>(context, listen: false)
-              .updateUser(_lastname.text, _firstname.text, context);
+              .updateUser(_lastname.text, _firstname.text, context)
+              .then((name) {
+            setState(() {});
+          });
           FocusScope.of(context).unfocus();
         },
       ),
@@ -105,7 +108,7 @@ class _SettingsState extends State<Settings> {
         result.updateProfile(userUpdateInfo);
         result.reload();
 
-        Navigator.pop(context);
+        Navigator.pushReplacementNamed(context, '/bottom/me');
       });
     }
   }

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:it_project/providers/auth.dart';
 import 'package:it_project/widgets/all_widgets.dart';
 import 'package:it_project/routes.dart';
 import 'package:it_project/models/all_models.dart';
+import 'package:provider/provider.dart';
 
 class BottomMe extends StatefulWidget {
   @override
@@ -13,22 +15,24 @@ class _BottomMeState extends State<BottomMe> {
   FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseUser _user;
   String profile;
-
+  String displayName;
   @override
   void initState() {
     super.initState();
-    _auth.currentUser().then((user) {
-      if (user != null) {
-        setState(() {
-          _user = user;
-        });
-        if (_user.displayName != null) {
-          profile = _user.displayName;
-        } else
-          profile = "the user does not have a name!";
-      } else
-        profile = "You are not logged in yet!";
-    });
+    displayName = Provider.of<Auth>(context, listen: false).displayName;
+
+    // _auth.currentUser().then((user) {
+    //   if (user != null) {
+    //     setState(() {
+    //       _user = user;
+    //     });
+    //     if (_user.displayName != null) {
+    //       profile = _user.displayName;
+    //     } else
+    //       profile = "the user does not have a name!";
+    //   } else
+    //     profile = "You are not logged in yet!";
+    // });
   }
 
   Future<FirebaseUser> getUserID() async {
@@ -39,44 +43,7 @@ class _BottomMeState extends State<BottomMe> {
 
   @override
   Widget build(BuildContext context) {
-    if (_user == null) {
-      return Container(
-          padding: EdgeInsets.all(16.0),
-          child: Form(
-            child: ListView(
-              children: <Widget>[
-                Center(
-                  child: Text("Logged out"),
-                ),
-                Divider(
-                  color: Colors.grey,
-                  height: 0,
-                ),
-                FlatButton(
-                  child: Text("Log in"),
-                  onPressed: () {
-                    Navigator.pushReplacementNamed(context, '/login');
-                  },
-                ),
-                Divider(
-                  color: Colors.grey,
-                  height: 0,
-                ),
-                FlatButton(
-                  child: Text("Register"),
-                  onPressed: () {
-                    Navigator.pushReplacementNamed(context, '/register');
-                  },
-                ),
-                Divider(
-                  color: Colors.grey,
-                  height: 0,
-                ),
-              ],
-            ),
-          ));
-    }
-
+    print('bottom me  rebuilt, display name is $displayName');
     return Container(
       padding: EdgeInsets.all(8.0),
       child: ListView(
@@ -101,7 +68,7 @@ class _BottomMeState extends State<BottomMe> {
                       Padding(
                         padding: EdgeInsets.all(32.0),
                         child: Text(
-                          profile,
+                          displayName == null ? 'no display' : displayName,
                           // snapshot.data.uid,
                           style: TextStyle(fontSize: 18),
                         ),
