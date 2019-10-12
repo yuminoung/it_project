@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -41,12 +39,6 @@ class Auth with ChangeNotifier {
         _displayName = result.user.displayName;
         print('login :name is$_displayName id is $_userId');
         notifyListeners();
-        final userData = json.encode(
-          {
-            '_userId': _userId,
-            '_displayName': _displayName,
-          },
-        );
         Navigator.pushReplacement(context,
             CustomSlideFromBottomPageRouteBuilder(widget: routes['/']));
         return result;
@@ -115,10 +107,9 @@ class Auth with ChangeNotifier {
         result.updateProfile(userUpdateInfo);
         result.reload();
         notifyListeners();
-        Navigator.pop(context);
       });
     }
-
+    Navigator.pushReplacementNamed(context, '/');
     print('new name is $_displayName id is $_userId');
     return _displayName;
   }
