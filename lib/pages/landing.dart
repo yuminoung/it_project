@@ -15,6 +15,7 @@ class _LandingPageState extends State<LandingPage> {
     print("Welcome to IT Project!");
     super.initState();
     FirebaseAuth.instance.currentUser().then((user) async {
+      
       await Future.delayed(Duration(seconds: 2));
       if (user == null) {
         Navigator.pushReplacement(
