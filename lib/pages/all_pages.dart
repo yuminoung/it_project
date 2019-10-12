@@ -4,6 +4,7 @@ export 'upload.dart';
 export 'bottom/bottom_home.dart';
 export 'bottom/bottom_me.dart';
 export 'bottom/bottom_family.dart';
+export 'bottom/bottom_notice.dart';
 
 export 'auth/login.dart';
 export 'auth/register.dart';

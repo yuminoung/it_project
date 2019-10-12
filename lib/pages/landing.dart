@@ -12,6 +12,7 @@ class LandingPage extends StatefulWidget {
 class _LandingPageState extends State<LandingPage> {
   @override
   void initState() {
+    print("Welcome to IT Project!");
     super.initState();
     FirebaseAuth.instance.currentUser().then((user) async {
       await Future.delayed(Duration(seconds: 2));

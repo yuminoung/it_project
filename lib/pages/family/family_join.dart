@@ -90,7 +90,7 @@ class _FamilyJoinState extends State<FamilyJoin> {
           } else {
             setState(() {
               hasError = true;
-              errorText = 'The family ID doesn\'t exists, please try again';
+              errorText = 'The family ID doesn\'t exist, please try again';
               isLoading = false;
             });
           }
