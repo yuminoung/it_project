@@ -74,17 +74,6 @@ class CustomPost extends StatelessWidget {
           Expanded(
             child: Container(
               child: PopupMenuButton(
-                onSelected: (result) {
-                  if (result == 'delete') {
-                    Firestore.instance.document('artifacts/' + docID).delete();
-                    StorageReference ref =
-                        FirebaseStorage.instance.ref().child('images/' + docID);
-                    ref.delete();
-                  }
-                  if (result == 'edit') {
-                    print('edit');
-                  }
-                },
                 child: Icon(Icons.more_horiz),
                 itemBuilder: (context) => [
                   PopupMenuItem(
@@ -103,8 +92,16 @@ class CustomPost extends StatelessWidget {
                     ),
                   ),
                   PopupMenuItem(
-                    value: 'delete',
-                    child: Text('Delete'),
+                    child: GestureDetector(
+                      child: Text('delete'),
+                      onTap: () {
+                        print(docID);
+                        Firestore.instance.document('artifacts/' + docID).delete();
+                        StorageReference ref = FirebaseStorage.instance.ref().child('images/'+ docID);
+                        ref.delete();
+                        Navigator.pushReplacementNamed(context, '/');
+                      },
+                    ),
                   )
                 ],
               ),

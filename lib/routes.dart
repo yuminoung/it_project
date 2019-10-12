@@ -1,4 +1,5 @@
 import 'package:it_project/pages/family/family_join.dart';
+import 'package:it_project/pages/refreshing.dart';
 
 import 'pages/all_pages.dart';
 
@@ -15,6 +16,7 @@ final routes = {
   '/bottom/home': BottomHome(),
   '/bottom/me': BottomMe(),
   '/bottom/family': BottomFamily(),
+  '/bottom/notice': BottomNotice(),
 
   // others
   '/edit': EditPost(),
@@ -22,4 +24,5 @@ final routes = {
   '/settings': Settings(),
   '/': Home(),
   '/landing': LandingPage(),
+  '/refreshing': RefreshingPage(),
 };

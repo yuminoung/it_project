@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:it_project/providers/auth.dart';
 import 'package:it_project/widgets/all_widgets.dart';
 import 'package:provider/provider.dart';
@@ -92,21 +90,4 @@ class _SettingsState extends State<Settings> {
     );
   }
 
-  void updateUser(
-      String lastname, String firstname, BuildContext context) async {
-    if (lastname != null && firstname != null) {
-      await FirebaseAuth.instance.currentUser().then((result) async {
-        await Firestore.instance
-            .collection('users')
-            .document(result.uid)
-            .setData({'displayName': firstname + ' ' + lastname});
-        var userUpdateInfo = new UserUpdateInfo();
-        userUpdateInfo.displayName = firstname + ' ' + lastname;
-        result.updateProfile(userUpdateInfo);
-        result.reload();
-
-        Navigator.pop(context);
-      });
-    }
-  }
 }
