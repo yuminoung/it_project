@@ -28,10 +28,10 @@ class _Notification_State extends State<Bottom_Notification>{
             padding: EdgeInsets.all(1.0),
             child: new Card(
                 color: Colors.lightBlueAccent,
-                child: new Text("User ${copy_artifacts[i]
+                child: new Text("\nUser ${copy_artifacts[i]
                     .username} has added a new artifact text  "
                     "${_humanReadableTime(copy_artifacts[i].time).toString()}"
-                    " at timedate: ${copy_artifacts[i].time.toDate()}",
+                    " at timedate: ${copy_artifacts[i].time.toDate()}\n",
                   //style: new TextStyle(fontWeight: FontWeight.w700),),
                 ))));
         //list.add(new Text(copy_artifacts[i].docID.toString()));
@@ -43,11 +43,11 @@ class _Notification_State extends State<Bottom_Notification>{
             padding: EdgeInsets.all(12.0),
             child: new Card(
                 color: Colors.lightBlueAccent,
-                child: new Text("User ${copy_artifacts[i]
+                child: new Text("\nUser ${copy_artifacts[i]
                     .username} has added a new artifact text and image "
                     "${copy_artifacts[i].image.toString()} "
                     "${_humanReadableTime(copy_artifacts[i].time).toString()}"
-                    " at timedate: ${copy_artifacts[i].time.toDate()}",
+                    " at timedate: ${copy_artifacts[i].time.toDate()}\n",
                   //style: new TextStyle(fontWeight: FontWeight.w700),),
                 ))));
         //list.add(new Text(copy_artifacts[i].docID.toString()));
