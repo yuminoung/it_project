@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +10,10 @@ import '../routes.dart';
 class Auth with ChangeNotifier {
   String _userId;
   String _displayName;
+  var _auth = FirebaseAuth.instance;
+  bool get isAuth {
+    return _userId != null;
+  }
 
   String get userId {
     print('userID in Authg is $_userId');
@@ -21,7 +27,8 @@ class Auth with ChangeNotifier {
     return _displayName;
   }
 
-  Future<void> loginUser(String email, String password, BuildContext context) {
+  Future<void> loginUser(
+      String email, String password, BuildContext context) async {
     if (password != null && email != null) {
       // final auth = FirebaseAuth.instance;
       // var user = FirebaseAuth.instance.currentUser();
@@ -34,7 +41,12 @@ class Auth with ChangeNotifier {
         _displayName = result.user.displayName;
         print('login :name is$_displayName id is $_userId');
         notifyListeners();
-
+        final userData = json.encode(
+          {
+            '_userId': _userId,
+            '_displayName': _displayName,
+          },
+        );
         Navigator.pushReplacement(context,
             CustomSlideFromBottomPageRouteBuilder(widget: routes['/']));
         return result;
@@ -77,7 +89,16 @@ class Auth with ChangeNotifier {
     return null;
   }
 
-  Future<void> updateUser(
+  Future<bool> tryAutoLogin() async {
+    var currentUser = await _auth.currentUser();
+    _displayName = currentUser.displayName;
+    _userId = currentUser.uid;
+
+    notifyListeners();
+    return true;
+  }
+
+  Future<String> updateUser(
       String lastname, String firstname, BuildContext context) async {
     print('updateUser called');
     if (lastname != null && firstname != null) {
@@ -85,18 +106,27 @@ class Auth with ChangeNotifier {
         await Firestore.instance
             .collection('users')
             .document(result.uid)
+<<<<<<< HEAD
             // the 'merge' value is set to true to stop bugs from happening
             .setData({'displayName': firstname + ' ' + lastname, }, merge: true);
+=======
+            .setData({
+          'displayName': firstname + ' ' + lastname,
+          'families': families
+        });
+>>>>>>> master
         _displayName = firstname + ' ' + lastname;
 
         var userUpdateInfo = new UserUpdateInfo();
         userUpdateInfo.displayName = firstname + ' ' + lastname;
         result.updateProfile(userUpdateInfo);
         result.reload();
+        notifyListeners();
         Navigator.pop(context);
       });
     }
+
     print('new name is $_displayName id is $_userId');
-    notifyListeners();
+    return _displayName;
   }
 }

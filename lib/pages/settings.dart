@@ -82,12 +82,14 @@ class _SettingsState extends State<Settings> {
         child: Text('Confirm Changes'),
         onPressed: () {
           Provider.of<Auth>(context, listen: false)
-              .updateUser(_lastname.text, _firstname.text, context);
+              .updateUser(_lastname.text, _firstname.text, context)
+              .then((name) {
+            setState(() {});
+          });
           FocusScope.of(context).unfocus();
         },
       ),
       padding: EdgeInsets.all(8.0),
     );
   }
-
 }

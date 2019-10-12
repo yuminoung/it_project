@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:it_project/pages/all_pages.dart';
 import 'package:it_project/pages/edit_post.dart';
 import 'package:it_project/pages/upload.dart';
 import 'package:it_project/providers/artifacts.dart';
@@ -30,9 +31,14 @@ class _MyAppState extends State<MyApp> {
         ],
         child: Consumer<Auth>(
             builder: (ctx, auth, _) => MaterialApp(
+                  home: auth.isAuth
+                      ? routes['/landing']
+                      : FutureBuilder(
+                          future: auth.tryAutoLogin(),
+                          builder: (ctx, authResultSnapshot) =>
+                              routes['/login']),
                   theme: themeData,
                   debugShowCheckedModeBanner: false,
-                  home: routes['/landing'],
                   routes: {
                     EditPost.routeName: (ctx) => EditPost(),
                     '/upload': (ctx) => Upload()
