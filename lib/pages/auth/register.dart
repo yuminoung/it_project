@@ -43,7 +43,7 @@ class _RegisterState extends State<Register> {
                       builder: (BuildContext context) {
                         return AlertDialog(
                           title: Text("Error", style: TextStyle(color: Colors.red, fontSize: 18),),
-                          content: Text("The passwords does not match", style:TextStyle(color: Colors.black, fontSize: 10)),
+                          content: Text("The passwords does not match", style:TextStyle(color: Colors.black, fontSize: 18)),
                           actions: <Widget> [
                             FlatButton(
                               child: Text("Close"),
