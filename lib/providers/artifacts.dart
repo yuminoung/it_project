@@ -4,6 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 
+
+import 'package:it_project/pages/home.dart';
+
 class Artifact {
   String image;
   String message;
@@ -71,5 +74,10 @@ class Artifacts with ChangeNotifier {
     print('new file added ');
     fetchAndSetArtifacts();
     notifyListeners();
+
+    // display artifact added message
+    HomeState.artifactAddedMessage();
+
+
   }
 }

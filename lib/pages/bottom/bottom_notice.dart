@@ -32,7 +32,9 @@ class _Notification_State extends State<Bottom_Notification>{
                     .username} has added a new artifact text  "
                     "${_humanReadableTime(copy_artifacts[i].time).toString()}"
                     " at timedate: ${copy_artifacts[i].time.toDate()}\n",
+                    style: new TextStyle(fontSize: 20.0, color: Colors.white),
                   //style: new TextStyle(fontWeight: FontWeight.w700),),
+
                 ))));
         //list.add(new Text(copy_artifacts[i].docID.toString()));
 
@@ -42,12 +44,13 @@ class _Notification_State extends State<Bottom_Notification>{
           //margin: ,
             padding: EdgeInsets.all(12.0),
             child: new Card(
-                color: Colors.lightBlueAccent,
+                color: Colors.orange,
                 child: new Text("\nUser ${copy_artifacts[i]
                     .username} has added a new artifact text and image "
                     "${copy_artifacts[i].image.toString()} "
                     "${_humanReadableTime(copy_artifacts[i].time).toString()}"
                     " at timedate: ${copy_artifacts[i].time.toDate()}\n",
+                  style: new TextStyle(fontSize: 20.0, color: Colors.white),
                   //style: new TextStyle(fontWeight: FontWeight.w700),),
                 ))));
         //list.add(new Text(copy_artifacts[i].docID.toString()));
@@ -57,7 +60,8 @@ class _Notification_State extends State<Bottom_Notification>{
 
         body: new Container(
 
-          child: ListView(children: list),
+          child: ListView(
+              children: list),
           color: Colors.black12,
         )
     );

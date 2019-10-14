@@ -6,16 +6,31 @@ import '../../providers/auth.dart';
 
 class Login extends StatefulWidget {
   @override
-  _LoginState createState() => _LoginState();
+  LoginState createState() => LoginState();
 }
 
-class _LoginState extends State<Login> {
+class LoginState extends State<Login> {
   TextEditingController _email = TextEditingController();
   TextEditingController _password = TextEditingController();
+
+  // a key to reference to login page for displaying error messages
+  static final GlobalKey<ScaffoldState>  _loginstate = new GlobalKey<ScaffoldState>();
+
+  static void wrongPassword() {
+    _loginstate.currentState.showSnackBar(new SnackBar(
+        content: new Text("Wrong User Name or Password")));
+  }
+
+  static void loginWarning(String warning) {
+    _loginstate.currentState.showSnackBar(new SnackBar(
+        content: new Text(warning)
+    ));
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _loginstate,
       appBar: CustomAppBar(
         title: 'Login',
       ),
