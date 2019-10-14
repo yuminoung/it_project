@@ -1,11 +1,8 @@
-import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:it_project/pages/all_pages.dart';
 import 'package:it_project/widgets/custom_slide_from_bottom_page_route_builder.dart';
-import 'package:it_project/models/user_model.dart';
 
 import '../routes.dart';
 
@@ -45,12 +42,6 @@ class Auth with ChangeNotifier {
         _displayName = result.user.displayName;
         print('login :name is$_displayName id is $_userId');
         notifyListeners();
-        final userData = json.encode(
-          {
-            '_userId': _userId,
-            '_displayName': _displayName,
-          },
-        );
         Navigator.pushReplacement(context,
             CustomSlideFromBottomPageRouteBuilder(widget: routes['/']));
         return result;
@@ -115,17 +106,13 @@ class Auth with ChangeNotifier {
   Future<String> updateUser(
       String lastname, String firstname, BuildContext context) async {
     print('updateUser called');
-    DocumentSnapshot userDocument = await UserModel.getUserDocument();
-    var families = userDocument.data['families'];
     if (lastname != null && firstname != null) {
       await FirebaseAuth.instance.currentUser().then((result) async {
         await Firestore.instance
             .collection('users')
             .document(result.uid)
-            .setData({
-          'displayName': firstname + ' ' + lastname,
-          'families': families
-        });
+            // the 'merge' value is set to true to stop bugs from happening
+            .setData({'displayName': firstname + ' ' + lastname, }, merge: true);
         _displayName = firstname + ' ' + lastname;
 
         var userUpdateInfo = new UserUpdateInfo();
@@ -133,10 +120,9 @@ class Auth with ChangeNotifier {
         result.updateProfile(userUpdateInfo);
         result.reload();
         notifyListeners();
-        Navigator.pop(context);
       });
     }
-
+    Navigator.pushReplacementNamed(context, '/');
     print('new name is $_displayName id is $_userId');
     return _displayName;
   }

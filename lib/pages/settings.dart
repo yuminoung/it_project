@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:it_project/providers/auth.dart';
 import 'package:it_project/widgets/all_widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:it_project/routes.dart';
 
 class Settings extends StatefulWidget {
   @override
@@ -84,7 +85,6 @@ class _SettingsState extends State<Settings> {
           Provider.of<Auth>(context, listen: false)
               .updateUser(_lastname.text, _firstname.text, context)
               .then((name) {
-            setState(() {});
           });
           FocusScope.of(context).unfocus();
         },

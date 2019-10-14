@@ -39,24 +39,24 @@ class _RegisterState extends State<Register> {
                 onPressed: (){
                   if (_password.text != _confirmPass.text) {
                     showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                              title: Text("Error", style: TextStyle(color: Colors.red, fontSize: 18),),
-                              content: Text("The passwords does not match", style:TextStyle(color: Colors.black, fontSize: 10)),
-                              actions: <Widget> [
-                                FlatButton(
-                                    child: Text("Close"),
-                                    onPressed: () {Navigator.of(context).pop();}
-                                )
-                              ]
-                          );
-                        }
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text("Error", style: TextStyle(color: Colors.red, fontSize: 18),),
+                          content: Text("The passwords does not match", style:TextStyle(color: Colors.black, fontSize: 10)),
+                          actions: <Widget> [
+                            FlatButton(
+                              child: Text("Close"),
+                              onPressed: () {Navigator.of(context).pop();}
+                            )
+                          ]
+                        );
+                      }
                     );
                   }
                   else{
                     Provider.of<Auth>(context, listen: false).registerUser(_email.text,
-                        _password.text, _lastname.text, _firstname.text, context);
+                    _password.text, _lastname.text, _firstname.text, context);
                     FocusScope.of(context).unfocus();
                     print(_password.text);
                     print(_email.text);
