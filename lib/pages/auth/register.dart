@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:it_project/providers/auth.dart';
 import 'package:it_project/widgets/all_widgets.dart';
 import 'package:it_project/routes.dart';
@@ -16,6 +14,7 @@ class _RegisterState extends State<Register> {
   TextEditingController _email = TextEditingController();
   TextEditingController _firstname = TextEditingController();
   TextEditingController _lastname = TextEditingController();
+  TextEditingController _confirmPass = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +32,37 @@ class _RegisterState extends State<Register> {
               _emailField(),
               _passwordField(),
               _confirmPasswordField(),
-              _registerButton(),
+              RaisedButton(
+                child: Text('Register'),
+                color: Theme.of(context).primaryColor,
+                textColor: Colors.white,
+                onPressed: (){
+                  if (_password.text != _confirmPass.text) {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text("Error", style: TextStyle(color: Colors.red, fontSize: 18),),
+                          content: Text("The passwords does not match", style:TextStyle(color: Colors.black, fontSize: 10)),
+                          actions: <Widget> [
+                            FlatButton(
+                              child: Text("Close"),
+                              onPressed: () {Navigator.of(context).pop();}
+                            )
+                          ]
+                        );
+                      }
+                    );
+                  }
+                  else{
+                    Provider.of<Auth>(context, listen: false).registerUser(_email.text,
+                    _password.text, _lastname.text, _firstname.text, context);
+                    FocusScope.of(context).unfocus();
+                    print(_password.text);
+                    print(_email.text);
+                  }
+                },
+              ),
               FlatButton(
                 child: Text('Already have an account?'),
                 onPressed: () {
@@ -131,7 +160,7 @@ class _RegisterState extends State<Register> {
     return Padding(
       padding: EdgeInsets.all(8.0),
       child: TextField(
-        controller: _password,
+        controller: _confirmPass,
         obscureText: true,
         maxLines: 1,
         // keyboardType: TextInputType.visiblePassword,
@@ -145,53 +174,5 @@ class _RegisterState extends State<Register> {
             border: InputBorder.none),
       ),
     );
-  }
-
-  Widget _registerButton() {
-    return Padding(
-      child: RaisedButton(
-        padding: EdgeInsets.all(16.0),
-        child: Text('Register'),
-        onPressed: () {
-          Provider.of<Auth>(context, listen: false).registerUser(_email.text,
-              _password.text, _lastname.text, _firstname.text, context);
-          FocusScope.of(context).unfocus();
-          print(_password.text);
-          print(_email.text);
-        },
-      ),
-      padding: EdgeInsets.all(8.0),
-    );
-  }
-
-  void registerUser() async {
-    final auth = FirebaseAuth.instance;
-    if (_password != null &&
-        _email != null &&
-        _lastname != null &&
-        _firstname != null) {
-      auth
-          .createUserWithEmailAndPassword(
-              email: _email.text, password: _password.text)
-          .then((result) async {
-        final firestoreRef =
-            Firestore.instance.collection('users').document(result.user.uid);
-        await firestoreRef.setData(
-          {
-            'displayName': _firstname.text + ' ' + _lastname.text,
-            'families': {}
-          },
-        );
-        FirebaseUser account = result.user;
-        var userUpdateInfo = new UserUpdateInfo();
-        userUpdateInfo.displayName = _firstname.text + ' ' + _lastname.text;
-        account.updateProfile(userUpdateInfo);
-        account.reload();
-        Navigator.pushReplacement(context,
-            CustomSlideFromBottomPageRouteBuilder(widget: routes['/']));
-      }).catchError((error) {
-        print(error);
-      });
-    }
   }
 }
