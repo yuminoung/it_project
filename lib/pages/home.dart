@@ -6,10 +6,10 @@ import '../widgets/all_widgets.dart';
 
 class Home extends StatefulWidget {
   @override
-  _HomeState createState() => _HomeState();
+  HomeState createState() => HomeState();
 }
 
-class _HomeState extends State<Home> {
+class HomeState extends State<Home> {
   int _index = 0;
 
   List<Widget> _tabs = [
@@ -69,9 +69,24 @@ class _HomeState extends State<Home> {
     return Container();
   }
 
+
+
+  // key for registering
+  static final GlobalKey<ScaffoldState>  _homestate = new GlobalKey<ScaffoldState>();
+
+  // adding artifacts message, snake bar display
+  static void artifactAddedMessage() {
+    _homestate.currentState.showSnackBar(new SnackBar(
+        content: new Text(
+            "Artifact added"
+        )));
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _homestate,
       appBar: CustomAppBar(
         title: _tabTitles[_index],
         trailing: _buildAppBarTrailing(_index),

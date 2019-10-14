@@ -8,18 +8,37 @@ import 'package:provider/provider.dart';
 
 class Register extends StatefulWidget {
   @override
-  _RegisterState createState() => _RegisterState();
+  RegisterState createState() => RegisterState();
 }
 
-class _RegisterState extends State<Register> {
+class RegisterState extends State<Register> {
   TextEditingController _password = TextEditingController();
   TextEditingController _email = TextEditingController();
   TextEditingController _firstname = TextEditingController();
   TextEditingController _lastname = TextEditingController();
 
+  // a variable for register failed warning
+  static final GlobalKey<ScaffoldState>  _registerstate = new GlobalKey<ScaffoldState>();
+
+  static void registerWarning(String warning) {
+    _registerstate.currentState.showSnackBar(new SnackBar(
+        content: new Text(
+          warning
+        )));
+  }
+  /*
+  static void insufficientLength() {
+    _registerstate.currentState.showSnackBar(new SnackBar(
+        content: new Text(
+            "Insufficient Length"
+                "Password should be 8 or more in length",
+        )));
+  }
+   */
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _registerstate,
       appBar: CustomAppBar(
         title: 'Register',
       ),
@@ -191,6 +210,9 @@ class _RegisterState extends State<Register> {
             CustomSlideFromBottomPageRouteBuilder(widget: routes['/']));
       }).catchError((error) {
         print(error);
+
+        // warning for the user for the error
+        registerWarning(error.toString());
       });
     }
   }

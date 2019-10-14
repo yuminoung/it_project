@@ -3,10 +3,13 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:it_project/pages/all_pages.dart';
 import 'package:it_project/widgets/custom_slide_from_bottom_page_route_builder.dart';
 import 'package:it_project/models/user_model.dart';
 
 import '../routes.dart';
+
+import 'package:it_project/pages/auth/login.dart';
 
 class Auth with ChangeNotifier {
   String _userId;
@@ -53,6 +56,13 @@ class Auth with ChangeNotifier {
         return result;
       }).catchError((error) {
         print(error);
+
+        //add the pop notification of the wrong username.
+        // ****************************
+        // ****************************
+        // ****************************
+        // LoginState.wrongPassword();
+        LoginState.loginWarning(error.toString());
       });
     }
     return null;
@@ -85,6 +95,9 @@ class Auth with ChangeNotifier {
             CustomSlideFromBottomPageRouteBuilder(widget: routes['/']));
       }).catchError((error) {
         print(error);
+        // password needs to be more than or equal to 8 in length
+        RegisterState.registerWarning(error.toString());
+
       });
     }
     return null;
