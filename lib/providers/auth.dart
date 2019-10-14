@@ -62,6 +62,8 @@ class Auth with ChangeNotifier {
         final firestoreRef =
             Firestore.instance.collection('users').document(result.user.uid);
         _userId = result.user.uid;
+        _displayName = firstname + ' ' + lastname;
+
         notifyListeners();
         await firestoreRef.setData(
           {'displayName': firstname + ' ' + lastname, 'families': {}},
@@ -69,6 +71,7 @@ class Auth with ChangeNotifier {
         FirebaseUser account = result.user;
         var userUpdateInfo = new UserUpdateInfo();
         userUpdateInfo.displayName = firstname + ' ' + lastname;
+
         account.updateProfile(userUpdateInfo);
         account.reload();
 
