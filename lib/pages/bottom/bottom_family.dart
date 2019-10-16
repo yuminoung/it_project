@@ -68,7 +68,7 @@ class _BottomFamilyState extends State<BottomFamily> {
           }
           return Center(
             child: Text(
-              'You don\'t have a family',
+              "Your family list is empty",
               style: TextStyle(fontSize: 24, fontFamily: 'Inconsolata'),
               textAlign: TextAlign.center,
             ),

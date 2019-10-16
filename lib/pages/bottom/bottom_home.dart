@@ -39,7 +39,7 @@ class _BottomHomeState extends State<BottomHome> {
 
   Widget _buildChild(List<Artifact> artifacts) {
     if (artifacts.length == 0)
-      return Container(child: Text('your album is empty $artifacts.length'));
+      return Center(child: Text('your album is empty $artifacts.length', style: TextStyle(color: Colors.black, fontSize: 15),));
     else
       return ListView(
         padding: EdgeInsets.fromLTRB(8, 8, 8, 0),

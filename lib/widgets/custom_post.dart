@@ -99,7 +99,7 @@ class CustomPost extends StatelessWidget {
                         Firestore.instance.document('artifacts/' + docID).delete();
                         StorageReference ref = FirebaseStorage.instance.ref().child('images/'+ docID);
                         ref.delete();
-                        Navigator.pushReplacementNamed(context, '/');
+                         Navigator.pushReplacementNamed(context, '/');
                       },
                     ),
                   )
