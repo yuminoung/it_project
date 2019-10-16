@@ -13,7 +13,6 @@ class BottomMe extends StatefulWidget {
 
 class _BottomMeState extends State<BottomMe> {
   FirebaseAuth _auth = FirebaseAuth.instance;
-  FirebaseUser _user;
   String profile;
   String displayName;
   @override
