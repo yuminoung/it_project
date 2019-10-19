@@ -84,9 +84,9 @@ class _BottomMeState extends State<BottomMe> {
           ),
           ListTile(
             leading: ImageIcon(AssetImage('assets/icons/setting.png')),
-            title: Text('Settings'),
+            title: Text('Change Username'),
             onTap: () {
-              print('ok');
+              print('updating user profile...');
               Navigator.push(
                   context,
                   CustomSlideFromBottomPageRouteBuilder(
@@ -95,6 +95,29 @@ class _BottomMeState extends State<BottomMe> {
           ),
           Divider(
             height: 0,
+          ),
+          ListTile(
+            leading: ImageIcon(AssetImage('assets/icons/setting.png')),
+            title: Text('Update Image'),
+            onTap: (){
+              showDialog(
+                context: context,
+                builder: (BuildContext ctxt){
+                  return AlertDialog(
+                    title: Text("Updating profile....", style: TextStyle(color: Colors.orange, fontSize: 18.0),),
+                    content: Text("This function is being developed, sorry for the inconvience!",style: TextStyle(color: Colors.blue, fontSize: 16.0),),
+                    actions: <Widget>[
+                      FlatButton(
+                        child: Text("Go Back"),
+                        onPressed: (){
+                          Navigator.of(ctxt).pop();
+                        },
+                      )
+                    ],
+                  );
+                }
+              );
+            },
           ),
           ListTile(
             leading: ImageIcon(AssetImage('assets/icons/logout2.png')),
