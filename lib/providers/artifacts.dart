@@ -3,9 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
-
-
-import 'package:it_project/pages/home.dart';
+import 'package:it_project/models/all_models.dart';
 
 class Artifact {
   String image;
@@ -43,7 +41,6 @@ class Artifacts with ChangeNotifier {
               docSnapshot.documentID,
               displayName));
     }).toList();
-    print('there is ' + _artifacts.length.toString());
     notifyListeners();
   }
 
@@ -54,11 +51,21 @@ class Artifacts with ChangeNotifier {
   Future<void> addArtifact(String message, File image) async {
     final ref = Firestore.instance.collection('artifacts').document();
     print('$displayName with id:$userId uploaded $message');
+    var userDoc = await UserModel.getUserDocument();
+    var families = [];
+    if (userDoc.data['families'] != null) {
+      userDoc.data['families'].forEach((key, _) {
+        families.add(key);
+      });
+    }
+
     ref.setData({
       'message': message,
       'created_at': DateTime.now(),
       'user': displayName,
       'uid': userId,
+      'families': families,
+      'members': [userDoc.documentID]
     });
     if (image != null) {
       StorageReference storageRef = FirebaseStorage.instance
@@ -76,8 +83,6 @@ class Artifacts with ChangeNotifier {
     notifyListeners();
 
     // display artifact added message
-    HomeState.artifactAddedMessage();
-
-
+    // HomeState.artifactAddedMessage();
   }
 }

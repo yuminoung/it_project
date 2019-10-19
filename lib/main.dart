@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:it_project/pages/all_pages.dart';
-import 'package:it_project/pages/edit_post.dart';
-import 'package:it_project/pages/upload.dart';
+
 import 'package:it_project/providers/artifacts.dart';
 import 'routes.dart';
 import 'theme.dart';
@@ -39,10 +37,6 @@ class _MyAppState extends State<MyApp> {
                               routes['/login']),
                   theme: themeData,
                   debugShowCheckedModeBanner: false,
-                  routes: {
-                    EditPost.routeName: (ctx) => EditPost(),
-                    '/upload': (ctx) => Upload()
-                  },
                 )));
   }
 }

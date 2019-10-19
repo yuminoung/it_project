@@ -65,24 +65,20 @@ class HomeState extends State<Home> {
     return Container();
   }
 
-
-
   // key for registering
-  static final GlobalKey<ScaffoldState>  _homestate = new GlobalKey<ScaffoldState>();
+  // static final GlobalKey<ScaffoldState> _homestate =
+  //     new GlobalKey<ScaffoldState>();
 
   // adding artifacts message, snake bar display
-  static void artifactAddedMessage() {
-    _homestate.currentState.showSnackBar(new SnackBar(
-        content: new Text(
-            "Artifact added"
-        )));
-  }
-
+  // static void artifactAddedMessage() {
+  //   _homestate.currentState
+  //       .showSnackBar(new SnackBar(content: new Text("Artifact added")));
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _homestate,
+      // key: _homestate,
       appBar: CustomAppBar(
         title: _tabTitles[_index],
         trailing: _buildAppBarTrailing(_index, context),
@@ -110,65 +106,81 @@ class HomeState extends State<Home> {
 void checkFamAndPop(BuildContext context) async {
   var user = await UserModel.getUserDocument();
   var fam = user.data['families'];
-  print("ppppppp\n");
-  if(fam.length == 0){
+  if (fam.length == 0) {
     showDialog(
-      context: context,
-      builder: (BuildContext context){
-        return AlertDialog(
-          title: Text("Warning", style: TextStyle(color: Colors.blue, fontSize: 20),),
-          content: Text("Your family list is empty, anything you upload will be visable to yourself only!", style: TextStyle(color: Colors.black, fontSize: 16),),
-          actions: <Widget> [
-            FlatButton(
-              child: Text("Continue"),
-              color: Colors.green,
-              textColor: Colors.black,
-              onPressed: (){
-                Navigator.pop(context);
-                Navigator.push(context, CustomSlideFromBottomPageRouteBuilder(widget: routes['/upload'],),);
-              },
-            ),
-            FlatButton(
-              child: Text("Cancel"),
-              color: Colors.green,
-              textColor: Colors.black,
-              onPressed: (){
-                Navigator.pop(context);
-              },
-            )
-          ]
-        );
-      }
-    );
-  }
-  else{
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+              title: Text(
+                "Warning",
+                style: TextStyle(color: Colors.blue, fontSize: 20),
+              ),
+              content: Text(
+                "Your family list is empty, anything you upload will be visable to yourself only!",
+                style: TextStyle(color: Colors.black, fontSize: 16),
+              ),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text("Continue"),
+                  color: Colors.green,
+                  textColor: Colors.black,
+                  onPressed: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      CustomSlideFromBottomPageRouteBuilder(
+                        widget: routes['/upload'],
+                      ),
+                    );
+                  },
+                ),
+                FlatButton(
+                  child: Text("Cancel"),
+                  color: Colors.green,
+                  textColor: Colors.black,
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                )
+              ]);
+        });
+  } else {
     showDialog(
-      context: context,
-      builder: (BuildContext context){
-        return AlertDialog(
-          title: Text("Uploading", style: TextStyle(color: Colors.blue, fontSize: 20),),
-          content: Text("Press the Continue to continue, or cancel uploading", style: TextStyle(color: Colors.black, fontSize: 16),),
-          actions: <Widget> [
-            FlatButton(
-              child: Text("Continue"),
-              color: Colors.green,
-              textColor: Colors.black,
-              onPressed: (){
-                Navigator.pop(context);
-                Navigator.push(context, CustomSlideFromBottomPageRouteBuilder(widget: routes['/upload'],),);
-              },
-            ),
-            FlatButton(
-              child: Text("Cancel"),
-              color: Colors.green,
-              textColor: Colors.black,
-              onPressed: (){
-                Navigator.pop(context);
-              },
-            ),
-          ]
-        );
-      }
-    );
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+              title: Text(
+                "Uploading",
+                style: TextStyle(color: Colors.blue, fontSize: 20),
+              ),
+              content: Text(
+                "Press the Continue to continue, or cancel uploading",
+                style: TextStyle(color: Colors.black, fontSize: 16),
+              ),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text("Continue"),
+                  color: Colors.green,
+                  textColor: Colors.black,
+                  onPressed: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      CustomSlideFromBottomPageRouteBuilder(
+                        widget: routes['/upload'],
+                      ),
+                    );
+                  },
+                ),
+                FlatButton(
+                  child: Text("Cancel"),
+                  color: Colors.green,
+                  textColor: Colors.black,
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ]);
+        });
   }
 }

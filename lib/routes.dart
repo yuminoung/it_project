@@ -15,7 +15,7 @@ final routes = {
   '/bottom/home': BottomHome(),
   '/bottom/me': BottomMe(),
   '/bottom/family': BottomFamily(),
-  '/bottom/notice': Bottom_Notification(),
+  '/bottom/notice': BottomNotification(),
 
   // others
   '/edit': EditPost(),

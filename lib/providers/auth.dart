@@ -90,8 +90,7 @@ class Auth with ChangeNotifier {
       }).catchError((error) {
         print(error);
         // password needs to be more than or equal to 8 in length
-        RegisterState.registerWarning(error.toString());
-
+        // RegisterState.registerWarning(error.toString());
       });
     }
     return null;
@@ -111,11 +110,11 @@ class Auth with ChangeNotifier {
     print('updateUser called');
     if (lastname != null && firstname != null) {
       await FirebaseAuth.instance.currentUser().then((result) async {
-        await Firestore.instance
-            .collection('users')
-            .document(result.uid)
+        await Firestore.instance.collection('users').document(result.uid)
             // the 'merge' value is set to true to stop bugs from happening
-            .setData({'displayName': firstname + ' ' + lastname, }, merge: true);
+            .setData({
+          'displayName': firstname + ' ' + lastname,
+        }, merge: true);
         _displayName = firstname + ' ' + lastname;
 
         var userUpdateInfo = new UserUpdateInfo();
