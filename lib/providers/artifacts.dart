@@ -50,13 +50,18 @@ class Artifacts with ChangeNotifier {
 
   Future<void> addArtifact(String message, File image) async {
     final ref = Firestore.instance.collection('artifacts').document();
-    print('$displayName with id:$userId uploaded $message');
     var userDoc = await UserModel.getUserDocument();
     var families = [];
-    if (userDoc.data['families'] != null) {
-      userDoc.data['families'].forEach((key, _) {
-        families.add(key);
-      });
+    if (ArtifactModel.allCanSee) {
+      if (userDoc.data['families'] != null) {
+        userDoc.data['families'].forEach((key, _) {
+          families.add(key);
+        });
+      }
+    } else if (ArtifactModel.customCanSee) {
+      families = ArtifactModel.whoCanSee;
+    } else {
+      families = [];
     }
 
     ref.setData({
@@ -76,9 +81,9 @@ class Artifacts with ChangeNotifier {
       String url = await downloadUrl.ref.getDownloadURL();
       ref.setData({
         'image': url,
+        'hasImage': true,
       }, merge: true);
     }
-    print('new file added ');
     fetchAndSetArtifacts();
     notifyListeners();
 
