@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "860540440753",
+    "firebase_url": "https://peaceful-app.firebaseio.com",
+    "project_id": "peaceful-app",
+    "storage_bucket": "peaceful-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:860540440753:android:acb9ae415baa495ebb9290",
+        "android_client_info": {
+          "package_name": "com.example.it_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "860540440753-hosudha0c373pg67e41ltv43sb8idlr0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjFg3w2X_GDgXc1_ZsgW1PslyGujUF1sw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "860540440753-hosudha0c373pg67e41ltv43sb8idlr0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "860540440753-1icjlqokjjj55eh2thojca7msscjq3cu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.itProject"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

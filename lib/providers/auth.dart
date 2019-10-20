@@ -128,4 +128,8 @@ class Auth with ChangeNotifier {
     print('new name is $_displayName id is $_userId');
     return _displayName;
   }
+
+  Future<void> updateProfile(Image image) async {
+    if (image != null) {}
+  }
 }

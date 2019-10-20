@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:it_project/pages/all_pages.dart';
 import 'package:it_project/providers/auth.dart';
 import 'package:it_project/widgets/all_widgets.dart';
 import 'package:it_project/routes.dart';
@@ -19,6 +20,19 @@ class _BottomMeState extends State<BottomMe> {
   void initState() {
     super.initState();
     displayName = Provider.of<Auth>(context, listen: false).displayName;
+
+    // _auth.currentUser().then((user) {
+    //   if (user != null) {
+    //     setState(() {
+    //       _user = user;
+    //     });
+    //     if (_user.displayName != null) {
+    //       profile = _user.displayName;
+    //     } else
+    //       profile = "the user does not have a name!";
+    //   } else
+    //     profile = "You are not logged in yet!";
+    // });
   }
 
   Future<FirebaseUser> getUserID() async {
@@ -45,7 +59,7 @@ class _BottomMeState extends State<BottomMe> {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(8.0),
                         child: Image(
-                          fit: BoxFit.fill,
+                          fit: BoxFit.cover,
                           image: AssetImage('assets/images/profile.png'),
                           width: MediaQuery.of(context).size.width / 6,
                           height: MediaQuery.of(context).size.width / 6,
@@ -71,9 +85,9 @@ class _BottomMeState extends State<BottomMe> {
           ),
           ListTile(
             leading: ImageIcon(AssetImage('assets/icons/setting.png')),
-            title: Text('Change Username'),
+            title: Text('Settings'),
             onTap: () {
-              print('updating user profile...');
+              print('ok');
               Navigator.push(
                   context,
                   CustomSlideFromBottomPageRouteBuilder(
@@ -84,27 +98,16 @@ class _BottomMeState extends State<BottomMe> {
             height: 0,
           ),
           ListTile(
-            leading: ImageIcon(AssetImage('assets/icons/setting.png')),
-            title: Text('Update Image'),
-            onTap: (){
-              showDialog(
-                context: context,
-                builder: (BuildContext ctxt){
-                  return AlertDialog(
-                    title: Text("Updating profile....", style: TextStyle(color: Colors.orange, fontSize: 18.0),),
-                    content: Text("This function is being developed, sorry for the inconvience!",style: TextStyle(color: Colors.blue, fontSize: 16.0),),
-                    actions: <Widget>[
-                      FlatButton(
-                        child: Text("Go Back"),
-                        onPressed: (){
-                          Navigator.of(ctxt).pop();
-                        },
-                      )
-                    ],
-                  );
-                }
-              );
+            leading: ImageIcon(AssetImage('assets/icons/face.png')),
+            title: Text('Profile'),
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return UploadProfile();
+              }));
             },
+          ),
+          Divider(
+            height: 0,
           ),
           ListTile(
             leading: ImageIcon(AssetImage('assets/icons/logout2.png')),

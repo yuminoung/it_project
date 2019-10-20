@@ -47,6 +47,7 @@ class _BottomHomeState extends State<BottomHome> {
                           docID: document.documentID,
                           username: document['user'],
                           uid: document['uid'],
+                          profileURL: document['profile_url'],
                         );
                       }).toList(),
                     );

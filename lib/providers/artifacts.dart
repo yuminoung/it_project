@@ -51,6 +51,7 @@ class Artifacts with ChangeNotifier {
   Future<void> addArtifact(String message, File image) async {
     final ref = Firestore.instance.collection('artifacts').document();
     var userDoc = await UserModel.getUserDocument();
+
     var families = [];
     if (ArtifactModel.allCanSee) {
       if (userDoc.data['families'] != null) {
@@ -68,6 +69,7 @@ class Artifacts with ChangeNotifier {
       'message': message,
       'created_at': DateTime.now(),
       'user': displayName,
+      'profile_url': userDoc.data['profile_url'],
       'uid': userId,
       'families': families,
       'members': [userDoc.documentID]
