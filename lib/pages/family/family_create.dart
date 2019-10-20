@@ -105,8 +105,8 @@ class _FamilyCreateState extends State<FamilyCreate> {
           FocusScope.of(context).unfocus();
           if (isValidated) {
             isLoading = true;
+            await UserModel.resetUserModel();
             await FamilyModel.createFamily(_familyName.text);
-            UserModel.resetUserModel();
             Navigator.pop(context);
           }
         },

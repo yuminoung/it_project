@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'all_models.dart';
 
 class FamilyModel {
+
   static final _familyRef = Firestore.instance.collection('families');
 
   // a function to create a family in firestore

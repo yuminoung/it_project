@@ -12,10 +12,8 @@ class LandingPage extends StatefulWidget {
 class _LandingPageState extends State<LandingPage> {
   @override
   void initState() {
-    print("Welcome to IT Project!");
     super.initState();
     FirebaseAuth.instance.currentUser().then((user) async {
-      
       await Future.delayed(Duration(seconds: 2));
       if (user == null) {
         Navigator.pushReplacement(
@@ -37,7 +35,8 @@ class _LandingPageState extends State<LandingPage> {
       body: Center(
         child: Text(
           "IT PROJECT\nHELLO WOLRD\n😆 OLIVER\n🤨 HAITIAN\n😋 YUMIN\n😎 ZIRUN",
-          style: TextStyle(fontFamily: 'Inconsolata', fontSize: 34, color: Colors.black),
+          style: TextStyle(
+              fontFamily: 'Inconsolata', fontSize: 34, color: Colors.black),
         ),
       ),
     );

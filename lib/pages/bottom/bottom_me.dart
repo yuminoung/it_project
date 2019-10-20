@@ -6,7 +6,6 @@ import 'package:it_project/routes.dart';
 import 'package:it_project/models/all_models.dart';
 import 'package:provider/provider.dart';
 
-
 class BottomMe extends StatefulWidget {
   @override
   _BottomMeState createState() => _BottomMeState();
@@ -20,18 +19,6 @@ class _BottomMeState extends State<BottomMe> {
   void initState() {
     super.initState();
     displayName = Provider.of<Auth>(context, listen: false).displayName;
-    // _auth.currentUser().then((user) {
-    //   if (user != null) {
-    //     setState(() {
-    //       _user = user;
-    //     });
-    //     if (_user.displayName != null) {
-    //       profile = _user.displayName;
-    //     } else
-    //       profile = "the user does not have a name!";
-    //   } else
-    //     profile = "You are not logged in yet!";
-    // });
   }
 
   Future<FirebaseUser> getUserID() async {

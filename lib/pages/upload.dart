@@ -53,6 +53,7 @@ class _UploadState extends State<Upload> {
             });
             await Provider.of<Artifacts>(context)
                 .addArtifact(_textFieldController.text, _image);
+            FocusScope.of(context).unfocus();
             Navigator.pop(context);
           },
         ),
@@ -68,20 +69,17 @@ class _UploadState extends State<Upload> {
                 child: Column(
                   children: <Widget>[
                     Expanded(
-                      child: SizedBox(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: TextField(
-                            expands: true,
-                            cursorColor: Colors.redAccent,
-                            controller: _textFieldController,
-                            onSubmitted: (_) {
-                              FocusScope.of(context).unfocus();
-                            },
-                            maxLines: null,
-                            decoration:
-                                InputDecoration(border: InputBorder.none),
-                          ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: TextField(
+                          expands: true,
+                          cursorColor: Colors.redAccent,
+                          controller: _textFieldController,
+                          onSubmitted: (_) {
+                            FocusScope.of(context).unfocus();
+                          },
+                          maxLines: null,
+                          decoration: InputDecoration(border: InputBorder.none),
                         ),
                       ),
                     ),
@@ -134,12 +132,7 @@ class _UploadState extends State<Upload> {
                 ),
               ),
             ),
-            isLoading
-                ? LinearProgressIndicator(
-                    backgroundColor: Color.fromRGBO(250, 250, 250, 0),
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.redAccent),
-                  )
-                : Container()
+            isLoading ? CustomProgressIndicator() : Container()
           ],
         ),
       ),
