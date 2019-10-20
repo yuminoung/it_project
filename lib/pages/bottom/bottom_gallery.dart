@@ -5,12 +5,12 @@ import 'package:it_project/models/all_models.dart';
 import 'package:it_project/widgets/all_widgets.dart';
 import 'package:it_project/pages/all_pages.dart';
 
-class BottomFamily extends StatefulWidget {
+class BottomGallery extends StatefulWidget {
   @override
-  _BottomFamilyState createState() => _BottomFamilyState();
+  _BottomGalleryState createState() => _BottomGalleryState();
 }
 
-class _BottomFamilyState extends State<BottomFamily> {
+class _BottomGalleryState extends State<BottomGallery> {
   String familyData = "NULL";
 
   @override
@@ -52,7 +52,7 @@ class _BottomFamilyState extends State<BottomFamily> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => FamilyView(
+                                builder: (context) => GalleryView(
                                   familyID: key,
                                   familyName: families[key],
                                 )));
@@ -68,7 +68,7 @@ class _BottomFamilyState extends State<BottomFamily> {
           }
           return Center(
             child: Text(
-              "You don't have a family",
+              "Your family list is empty",
               style: TextStyle(fontSize: 24, fontFamily: 'Inconsolata'),
               textAlign: TextAlign.center,
             ),

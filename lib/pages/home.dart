@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:it_project/models/user_model.dart';
+import 'package:it_project/pages/bottom/bottom_gallery.dart';
+import 'package:it_project/pages/upload.dart';
 import 'package:it_project/routes.dart';
 import 'package:it_project/widgets/custom_bottom_navigation_bar.dart';
 
@@ -16,18 +18,20 @@ class HomeState extends State<Home> {
   List<Widget> _tabs = [
     routes['/bottom/home'],
     routes['/bottom/family'],
-    routes['/bottom/notice'],
+    BottomGallery(),
     routes['/bottom/me']
   ];
 
-  List<String> _tabTitles = ['Artifacts', 'Family', 'Notifications', 'Me'];
+  List<String> _tabTitles = ['Artifacts', 'Family', 'Gallery', 'Me'];
 
   Widget _buildAppBarTrailing(int index, BuildContext context) {
     if (index == 0) {
       return CustomIconButton(
         icon: Icon(Icons.camera_alt),
         onTap: () {
-          checkFamAndPop(context);
+          Navigator.push(
+              context, CustomSlideFromBottomPageRouteBuilder(widget: Upload()));
+          // checkFamAndPop(context);
         },
       );
     } else if (index == 1) {

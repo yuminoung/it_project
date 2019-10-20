@@ -17,3 +17,9 @@ export 'family/family_create.dart';
 export 'family/family_join.dart';
 export 'family/family_view.dart';
 export 'family/family_id.dart';
+//export 'family/who_can_see.dart';
+//export 'family/family_qr_scanner.dart';
+export 'bottom/bottom_gallery.dart';
+
+export 'gallery/gallery_view.dart';
+export 'gallery/gallery_detail.dart';
