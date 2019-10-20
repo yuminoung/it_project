@@ -23,3 +23,4 @@ export 'bottom/bottom_gallery.dart';
 
 export 'gallery/gallery_view.dart';
 export 'gallery/gallery_detail.dart';
+export 'family/who_can_see.dart';

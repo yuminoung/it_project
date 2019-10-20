@@ -19,19 +19,6 @@ class _BottomMeState extends State<BottomMe> {
   void initState() {
     super.initState();
     displayName = Provider.of<Auth>(context, listen: false).displayName;
-
-    // _auth.currentUser().then((user) {
-    //   if (user != null) {
-    //     setState(() {
-    //       _user = user;
-    //     });
-    //     if (_user.displayName != null) {
-    //       profile = _user.displayName;
-    //     } else
-    //       profile = "the user does not have a name!";
-    //   } else
-    //     profile = "You are not logged in yet!";
-    // });
   }
 
   Future<FirebaseUser> getUserID() async {
@@ -84,9 +71,9 @@ class _BottomMeState extends State<BottomMe> {
           ),
           ListTile(
             leading: ImageIcon(AssetImage('assets/icons/setting.png')),
-            title: Text('Settings'),
+            title: Text('Change Username'),
             onTap: () {
-              print('ok');
+              print('updating user profile...');
               Navigator.push(
                   context,
                   CustomSlideFromBottomPageRouteBuilder(
@@ -95,6 +82,29 @@ class _BottomMeState extends State<BottomMe> {
           ),
           Divider(
             height: 0,
+          ),
+          ListTile(
+            leading: ImageIcon(AssetImage('assets/icons/setting.png')),
+            title: Text('Update Image'),
+            onTap: (){
+              showDialog(
+                context: context,
+                builder: (BuildContext ctxt){
+                  return AlertDialog(
+                    title: Text("Updating profile....", style: TextStyle(color: Colors.orange, fontSize: 18.0),),
+                    content: Text("This function is being developed, sorry for the inconvience!",style: TextStyle(color: Colors.blue, fontSize: 16.0),),
+                    actions: <Widget>[
+                      FlatButton(
+                        child: Text("Go Back"),
+                        onPressed: (){
+                          Navigator.of(ctxt).pop();
+                        },
+                      )
+                    ],
+                  );
+                }
+              );
+            },
           ),
           ListTile(
             leading: ImageIcon(AssetImage('assets/icons/logout2.png')),

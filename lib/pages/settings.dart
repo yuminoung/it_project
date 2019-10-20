@@ -16,7 +16,7 @@ class _SettingsState extends State<Settings> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: 'Settings',
+        title: 'Changing username',
         leading: CustomIconButton(
           icon: Icon(Icons.close),
           onTap: () {
@@ -32,6 +32,7 @@ class _SettingsState extends State<Settings> {
               _firstnameField(),
               _lastnameField(),
               _confirmButton(),
+              _cancelButton(),
             ],
           ),
         ),
@@ -49,7 +50,7 @@ class _SettingsState extends State<Settings> {
         decoration: new InputDecoration(
             hintText: 'First Name',
             icon: new Icon(
-              Icons.person,
+              Icons.text_fields,
               color: Colors.grey,
             ),
             border: InputBorder.none),
@@ -67,7 +68,7 @@ class _SettingsState extends State<Settings> {
         decoration: new InputDecoration(
             hintText: 'Last Name',
             icon: new Icon(
-              Icons.person,
+              Icons.text_fields,
               color: Colors.grey,
             ),
             border: InputBorder.none),
@@ -85,6 +86,19 @@ class _SettingsState extends State<Settings> {
               .updateUser(_lastname.text, _firstname.text, context)
               .then((name) {});
           FocusScope.of(context).unfocus();
+        },
+      ),
+      padding: EdgeInsets.all(8.0),
+    );
+  }
+
+  Widget _cancelButton (){
+    return Padding(
+      child: RaisedButton(
+        padding: EdgeInsets.all(16.0),
+        child: Text("Cancel"),
+        onPressed: (){
+          Navigator.pop(context);
         },
       ),
       padding: EdgeInsets.all(8.0),

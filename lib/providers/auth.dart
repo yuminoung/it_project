@@ -112,9 +112,9 @@ class Auth with ChangeNotifier {
       await FirebaseAuth.instance.currentUser().then((result) async {
         await Firestore.instance.collection('users').document(result.uid)
             // the 'merge' value is set to true to stop bugs from happening
-            .setData({
+            .updateData({
           'displayName': firstname + ' ' + lastname,
-        }, merge: true);
+        });
         _displayName = firstname + ' ' + lastname;
 
         var userUpdateInfo = new UserUpdateInfo();
