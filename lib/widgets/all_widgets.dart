@@ -6,3 +6,4 @@ export 'custom_slide_from_bottom_page_route_builder.dart';
 export 'custom_divider.dart';
 export 'custom_progress_indicator.dart';
 export 'custom_pop_button.dart';
+export 'custom_arrow_back.dart';
