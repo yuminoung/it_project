@@ -50,11 +50,7 @@ class _SettingsState extends State<Settings> {
         decoration: new InputDecoration(
             hintText: 'First Name',
             icon: new Icon(
-<<<<<<< HEAD
               Icons.text_fields,
-=======
-              Icons.person,
->>>>>>> master
               color: Colors.grey,
             ),
             border: InputBorder.none),
@@ -72,11 +68,7 @@ class _SettingsState extends State<Settings> {
         decoration: new InputDecoration(
             hintText: 'Last Name',
             icon: new Icon(
-<<<<<<< HEAD
               Icons.text_fields,
-=======
-              Icons.person,
->>>>>>> master
               color: Colors.grey,
             ),
             border: InputBorder.none),
