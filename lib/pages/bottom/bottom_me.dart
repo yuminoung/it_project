@@ -6,6 +6,7 @@ import 'package:it_project/routes.dart';
 import 'package:it_project/models/all_models.dart';
 import 'package:provider/provider.dart';
 
+
 class BottomMe extends StatefulWidget {
   @override
   _BottomMeState createState() => _BottomMeState();
@@ -19,7 +20,6 @@ class _BottomMeState extends State<BottomMe> {
   void initState() {
     super.initState();
     displayName = Provider.of<Auth>(context, listen: false).displayName;
-
     // _auth.currentUser().then((user) {
     //   if (user != null) {
     //     setState(() {

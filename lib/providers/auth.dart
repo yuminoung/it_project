@@ -116,4 +116,6 @@ class Auth with ChangeNotifier {
     print('new name is $_displayName id is $_userId');
     return _displayName;
   }
+
+
 }
